@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    @GetMapping("/nuevo")
+    /*@GetMapping("/nuevo")
     public Usuario obtenerUsuario(){
         return new Usuario(1, "Cristian", "contra", "ADMIN", "email@mail.com", LocalDate.now(),  LocalDate.now(),  LocalDate.now(), true);
-    }
+    }*/
 }
