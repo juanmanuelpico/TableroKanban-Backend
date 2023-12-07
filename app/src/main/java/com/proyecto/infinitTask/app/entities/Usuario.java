@@ -21,27 +21,47 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_usuario")
     private int id;
+
     @Column(name="usuario")
     private String usuario;
+
     @Column(name="password")
     private String password;
+
     @Column(name="nombre")
     private String nombre;
+
     @Column(name="apellido")
     private String apellido;
+
     @Column(name="email")
     private String email;
+
     @Column(name="fecha_alta")
     private LocalDate fechaAlta;
+
     @Column(name="fecha_baja")
     private LocalDate fechaBaja;
+
     @Column(name="fecha_actualizacion")
     private LocalDate fechaActualizacion;
+
     @Column(name="activo")
     private boolean activo;
+
+    //CAMBIARLO A MANY TO ONE
     @ManyToMany
     @JoinTable(name = "usuario_tiene_rol", joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private Set<RolUsuario> roles = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "usuario_tiene_proyecto", joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_proyecto"))
+    private Set<Proyecto> proyectos = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "usuario_tiene_tarea", joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_tarea"))
+    private Set<Tarea> tareas = new HashSet<>();
 }

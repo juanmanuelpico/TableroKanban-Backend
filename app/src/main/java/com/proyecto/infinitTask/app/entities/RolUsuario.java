@@ -36,6 +36,7 @@ public class RolUsuario {
     @Column(name="activo")
     private boolean activo;
 
+    //CAMBIARLO A ONE TO MANY
     @ManyToMany(mappedBy = "roles")
     private Set<Usuario> usuarios = new HashSet<>();
 
