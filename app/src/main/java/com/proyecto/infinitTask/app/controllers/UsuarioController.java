@@ -23,9 +23,13 @@ public class UsuarioController {
         try{
            usuarioService.crearUsuario(dto);
            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado exitosamente"));
+           //ES QUIVALENTE
+           //return new ResponseEntity<>(new Mensaje("Usuario creado exitosamente"), HttpStatus.CREATED );
 
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+            //ES QUIVALENTE
+           // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
     }
 }
