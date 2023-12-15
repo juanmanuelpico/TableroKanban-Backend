@@ -37,10 +37,10 @@ public class Proyecto {
     @Column(name="fecha_fin")
     private LocalDateTime fechaFin;
 
-    @ManyToMany(mappedBy = "proyectos")
-    private Set<Usuario> usuarios = new HashSet<>();
-
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
     private Set<Tarea> tareas = new HashSet<>();
+
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
+    private Set<ProyectoRolUsuario> proyectoRolUsuarios = new HashSet<>();
 
 }

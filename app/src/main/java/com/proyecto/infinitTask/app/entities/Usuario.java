@@ -49,19 +49,13 @@ public class Usuario {
     @Column(name="activo")
     private boolean activo;
 
-    //CAMBIARLO A MANY TO ONE
-    @ManyToMany
-    @JoinTable(name = "usuario_tiene_rol", joinColumns = @JoinColumn(name = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "id_rol"))
-    private Set<RolUsuario> roles = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "usuario_tiene_proyecto", joinColumns = @JoinColumn(name = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "id_proyecto"))
-    private Set<Proyecto> proyectos = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "usuario_tiene_tarea", joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_tarea"))
     private Set<Tarea> tareas = new HashSet<>();
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Set<ProyectoRolUsuario> proyectoRolUsuarios = new HashSet<>();
 }
