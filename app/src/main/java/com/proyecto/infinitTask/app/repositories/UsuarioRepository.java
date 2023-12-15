@@ -8,5 +8,6 @@ import org.springframework.data.repository.query.Param;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 
-    //Usuario findByIdWithRoles(@Param("usuarioId") int id);
+    Usuario findByUsuario(String usuario);
+    Usuario findByEmail(String email);
 }

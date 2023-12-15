@@ -1,9 +1,13 @@
 package com.proyecto.infinitTask.app.controllers;
 
+import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.entities.Usuario;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.proyecto.infinitTask.app.services.IUsuarioService;
+import com.proyecto.infinitTask.app.util.Mensaje;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -11,8 +15,17 @@ import java.time.LocalDate;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    /*@GetMapping("/nuevo")
-    public Usuario obtenerUsuario(){
-        return new Usuario(1, "Cristian", "contra", "ADMIN", "email@mail.com", LocalDate.now(),  LocalDate.now(),  LocalDate.now(), true);
-    }*/
+    @Autowired
+    private IUsuarioService usuarioService;
+
+    @PostMapping("/registro")
+    public ResponseEntity<Object> crearUsuario(@RequestBody UsuarioDTORequest dto){
+        try{
+           usuarioService.crearUsuario(dto);
+           return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Usuario creado exitosamente"));
+
+        }catch(Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    }
 }
