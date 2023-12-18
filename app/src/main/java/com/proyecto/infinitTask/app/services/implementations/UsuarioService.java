@@ -37,8 +37,13 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public UsuarioDTOResponse traerUsuarioId(int id) {
-        return null;
+    public UsuarioDTOResponse traerUsuarioId(int id)throws Exception{
+        Usuario usuarioExistente = usuarioRepository.findById(id);
+
+        if(usuarioExistente == null){
+            throw new Exception("No se encontro el usuario con el id: " + usuarioExistente.getId());
+        }
+        return modelMapper.map(usuarioExistente, UsuarioDTOResponse.class);
     }
     @Override
     public UsuarioDTOResponse traerUsuario(String usuario)throws Exception{
