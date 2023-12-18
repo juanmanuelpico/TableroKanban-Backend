@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/usuario")
@@ -59,5 +61,15 @@ public class UsuarioController {
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping("/traerUsuarios")
+    public ResponseEntity<List <UsuarioDTOResponse>> obtenerUsuarios(){
+        try{
+            List <UsuarioDTOResponse> listaDto = usuarioService.obtenerUsuarios();
+            return ResponseEntity.status(HttpStatus.OK).body(listaDto);
+        } catch (Exception e){
+            return null;
+        }
     }
 }
