@@ -1,6 +1,7 @@
 package com.proyecto.infinitTask.app.controllers;
 
 import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
+import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import com.proyecto.infinitTask.app.util.Mensaje;
@@ -31,5 +32,17 @@ public class UsuarioController {
             //ES QUIVALENTE
            // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
+    }
+
+    @GetMapping("/{usuario}")
+    public ResponseEntity<Object> obtenerUsuario(@PathVariable String usuario) {
+
+        try{
+            UsuarioDTOResponse dtoUsuario = usuarioService.traerUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.OK).body(dtoUsuario);
+        } catch (Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
