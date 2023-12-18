@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,8 +47,6 @@ public class Usuario {
 
     @Column(name="activo")
     private boolean activo;
-
-
 
     @ManyToMany
     @JoinTable(name = "usuario_tiene_tarea", joinColumns = @JoinColumn(name = "id_usuario"),

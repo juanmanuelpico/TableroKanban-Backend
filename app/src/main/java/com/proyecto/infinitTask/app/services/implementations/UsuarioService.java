@@ -1,6 +1,7 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
 import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
+import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
@@ -24,17 +25,30 @@ public class UsuarioService implements IUsuarioService {
         if(usuarioRepository.findByUsuario(dto.getUsuario()) != null) {
             throw new Exception("El nombre del usuario ya existe");
         }
-
-        if(usuarioRepository.findByEmail(dto.getEmail())!= null) {
+        if(usuarioRepository.findByEmail(dto.getEmail()) != null) {
             throw new Exception("El mail ya se encuentra registrado");
         }
-
         Usuario usuario = modelMapper.map(dto, Usuario.class);
-
         usuario.setFechaAlta(LocalDate.now());
         usuario.setActivo(true);
         usuarioRepository.save(usuario);
 
         return true;
+    }
+
+    @Override
+    public UsuarioDTOResponse traerUsuarioId(int id) {
+        return null;
+    }
+    @Override
+    public UsuarioDTOResponse traerUsuario(String usuario)throws Exception{
+        Usuario existente = usuarioRepository.findByUsuario(usuario);
+
+        if(existente == null){
+            throw new Exception("No se ecuentra el usuario " + existente.getUsuario());
+        }
+
+        return modelMapper.map(existente, UsuarioDTOResponse.class);
+
     }
 }
