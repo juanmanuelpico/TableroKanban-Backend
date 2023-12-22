@@ -1,5 +1,6 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
+import com.proyecto.infinitTask.app.dtos.request.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Usuario;
@@ -74,5 +75,14 @@ public class UsuarioService implements IUsuarioService {
         }
 
         return listaUsuarioDto;
+    }
+
+    @Override
+    public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin) throws Exception{
+        Usuario usuarioEntidad = usuarioRepository.findByUsuarioAndPasswordCaseSensitive(dtoLogin.getUsuario(), dtoLogin.getPassword());
+        if(usuarioEntidad == null){
+            throw new Exception("Usuario y/o contraseña incorrecto");
+        }
+        return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
     }
 }

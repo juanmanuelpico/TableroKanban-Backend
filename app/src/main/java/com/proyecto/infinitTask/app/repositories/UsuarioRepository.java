@@ -13,4 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Usuario findByUsuario(String usuario);
     Usuario findByEmail(String email);
     List<Usuario> findAll();
+
+    @Query(value = "SELECT * FROM Usuario u WHERE u.usuario = :usuario AND u.password = :password COLLATE Latin1_General_CS", nativeQuery = true)
+    Usuario findByUsuarioAndPasswordCaseSensitive(@Param("usuario") String usuario, @Param("password") String password);
 }
