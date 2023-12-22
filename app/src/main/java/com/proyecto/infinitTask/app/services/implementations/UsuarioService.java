@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("usuarioService")
 public class UsuarioService implements IUsuarioService {
@@ -55,5 +57,22 @@ public class UsuarioService implements IUsuarioService {
 
         return modelMapper.map(existente, UsuarioDTOResponse.class);
 
+    }
+
+    @Override
+    public List<UsuarioDTOResponse> obtenerUsuarios() throws Exception{
+
+        List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
+        List<Usuario> listaUsuarioEnt = usuarioRepository.findAll();
+
+        if(listaUsuarioEnt.isEmpty()) {
+            throw new Exception("La lista de usuarios esta vacía.");
+        }
+
+        for(Usuario u: listaUsuarioEnt){
+            listaUsuarioDto.add(modelMapper.map(u, UsuarioDTOResponse.class));
+        }
+
+        return listaUsuarioDto;
     }
 }
