@@ -1,9 +1,9 @@
 package com.proyecto.infinitTask.app.services;
 
 
-import com.proyecto.infinitTask.app.dtos.request.UsuarioDTOLogin;
-import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
-import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 
 import java.util.List;
 

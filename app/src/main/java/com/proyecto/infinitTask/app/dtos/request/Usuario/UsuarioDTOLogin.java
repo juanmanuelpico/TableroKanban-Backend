@@ -1,4 +1,4 @@
-package com.proyecto.infinitTask.app.dtos.request;
+package com.proyecto.infinitTask.app.dtos.request.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,16 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UsuarioDTORequest {
-
+public class UsuarioDTOLogin {
     private String usuario;
-
     private String password;
-
-    private String nombre;
-
-    private String apellido;
-
-    private String email;
-
 }

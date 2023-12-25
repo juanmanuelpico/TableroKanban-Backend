@@ -1,8 +1,8 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
-import com.proyecto.infinitTask.app.dtos.request.UsuarioDTOLogin;
-import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
-import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IUsuarioService;

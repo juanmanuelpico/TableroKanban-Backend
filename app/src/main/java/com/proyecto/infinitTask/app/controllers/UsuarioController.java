@@ -1,7 +1,7 @@
 package com.proyecto.infinitTask.app.controllers;
 
-import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
-import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import com.proyecto.infinitTask.app.util.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
