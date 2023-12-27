@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class ProyectoDTOResponse {
 
     private String descripcion;
 
-    private LocalDateTime fechaInicio;
+    private LocalDate fechaInicio;
 
-    private LocalDateTime fechaFin;
+    private LocalDate fechaFin;
 }

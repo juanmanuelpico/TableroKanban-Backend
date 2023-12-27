@@ -6,15 +6,15 @@ import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
 import com.proyecto.infinitTask.app.services.IProyectoService;
 import com.proyecto.infinitTask.app.util.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -37,5 +37,16 @@ public class ProyectoController {
         }
     }
 
+    @GetMapping("/traerProyectosInicioFin/{idUsuario}")
+    public ResponseEntity<Object> obtenerProyectosDeUsuarioFechaDesdeFechaHasta(@PathVariable int idUsuario,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaDesde,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaHasta) {
+        try {
+            List<ProyectoDTOResponse> dtos = proyectoService.obtenerProyectosDeUsuarioDesdeHasta(idUsuario, fechaDesde, fechaHasta);
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 
 }
