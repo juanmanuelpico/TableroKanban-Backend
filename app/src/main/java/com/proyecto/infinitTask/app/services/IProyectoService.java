@@ -11,4 +11,7 @@ public interface IProyectoService {
     public List<ProyectoDTOResponse> obtenerProyectosDeUsuarioDesdeHasta(int idUsuario, LocalDate fechaInicio, LocalDate fechaFin) throws Exception;
 
     public ProyectoDTOResponse traerProyectoId(int id) throws Exception;
+
+    ProyectoDTOResponse traerProyectoNombre(String nombre) throws Exception;
+
 }

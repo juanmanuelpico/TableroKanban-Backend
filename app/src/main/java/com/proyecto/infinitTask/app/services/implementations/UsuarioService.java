@@ -22,6 +22,7 @@ public class UsuarioService implements IUsuarioService {
 
     @Autowired(required = true)
     private ModelMapper modelMapper;
+
     @Override
     public boolean crearUsuario(UsuarioDTORequest dto) throws Exception{
 
@@ -48,6 +49,7 @@ public class UsuarioService implements IUsuarioService {
         }
         return modelMapper.map(usuarioExistente, UsuarioDTOResponse.class);
     }
+
     @Override
     public UsuarioDTOResponse traerUsuario(String usuario)throws Exception{
         Usuario existente = usuarioRepository.findByUsuario(usuario);
