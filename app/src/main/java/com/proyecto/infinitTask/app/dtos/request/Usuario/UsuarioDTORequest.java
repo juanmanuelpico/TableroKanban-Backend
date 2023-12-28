@@ -1,4 +1,4 @@
-package com.proyecto.infinitTask.app.dtos.request;
+package com.proyecto.infinitTask.app.dtos.request.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

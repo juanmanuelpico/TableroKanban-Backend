@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,11 +31,11 @@ public class Proyecto {
     @Column(name="activo")
     private boolean activo;
 
-    @Column(name="fecha_inicio")
-    private LocalDateTime fechaInicio;
+    @Column(name = "fecha_inicio")
+    private LocalDate fechaInicio;
 
-    @Column(name="fecha_fin")
-    private LocalDateTime fechaFin;
+    @Column(name = "fecha_fin")
+    private LocalDate fechaFin;
 
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
     private Set<Tarea> tareas = new HashSet<>();

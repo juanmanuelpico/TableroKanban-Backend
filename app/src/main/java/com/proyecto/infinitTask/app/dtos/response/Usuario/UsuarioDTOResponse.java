@@ -1,4 +1,4 @@
-package com.proyecto.infinitTask.app.dtos.response;
+package com.proyecto.infinitTask.app.dtos.response.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,8 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
-import com.proyecto.infinitTask.app.dtos.request.UsuarioDTORequest;
-import com.proyecto.infinitTask.app.dtos.response.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
@@ -61,17 +62,27 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public List<UsuarioDTOResponse> obtenerUsuarios() throws Exception{
-        List<UsuarioDTOResponse> listaDto = new ArrayList<>();
-        List<Usuario> listaEnt = usuarioRepository.findAll();
 
-        if(listaEnt.isEmpty()) {
+        List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
+        List<Usuario> listaUsuarioEnt = usuarioRepository.findAll();
+
+        if(listaUsuarioEnt.isEmpty()) {
             throw new Exception("La lista de usuarios esta vacía.");
         }
 
-        for(Usuario u: listaEnt){
-            listaDto.add(modelMapper.map(u, UsuarioDTOResponse.class));
+        for(Usuario u: listaUsuarioEnt){
+            listaUsuarioDto.add(modelMapper.map(u, UsuarioDTOResponse.class));
         }
 
-        return listaDto;
+        return listaUsuarioDto;
+    }
+
+    @Override
+    public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin) throws Exception{
+        Usuario usuarioEntidad = usuarioRepository.findByUsuarioAndPasswordCaseSensitive(dtoLogin.getUsuario(), dtoLogin.getPassword());
+        if(usuarioEntidad == null){
+            throw new Exception("Usuario y/o contraseña incorrecto");
+        }
+        return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
     }
 }
