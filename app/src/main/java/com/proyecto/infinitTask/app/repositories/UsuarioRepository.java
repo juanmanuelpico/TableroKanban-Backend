@@ -10,8 +10,11 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Usuario findById(int id);
+
     Usuario findByUsuario(String usuario);
+
     Usuario findByEmail(String email);
+
     List<Usuario> findAll();
 
     @Query(value = "SELECT * FROM usuario u WHERE BINARY u.usuario = :usuario AND u.password = :password", nativeQuery = true)
