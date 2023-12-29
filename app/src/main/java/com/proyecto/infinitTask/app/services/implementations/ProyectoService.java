@@ -63,7 +63,6 @@ public class ProyectoService implements IProyectoService {
         return proyectosDTO;
     }
 
-
     public List<Proyecto> convertirObjetosEnProyectos(List<Object[]> objects) {
         List<Proyecto> proyectos = new ArrayList<>();
         for (Object[] object : objects) {

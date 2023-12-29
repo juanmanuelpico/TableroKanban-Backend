@@ -8,6 +8,7 @@ import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,24 +19,31 @@ import java.util.List;
 public class UsuarioService implements IUsuarioService {
 
     @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired(required = true)
     private ModelMapper modelMapper;
-    @Override
-    public boolean crearUsuario(UsuarioDTORequest dto) throws Exception{
 
-        if(usuarioRepository.findByUsuario(dto.getUsuario()) != null) {
+    @Override
+    public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
+
+        if (usuarioRepository.findByUsuario(dto.getUsuario()) != null) {
             throw new Exception("El nombre del usuario ya existe");
         }
-        if(usuarioRepository.findByEmail(dto.getEmail()) != null) {
+        if (usuarioRepository.findByEmail(dto.getEmail()) != null) {
             throw new Exception("El mail ya se encuentra registrado");
         }
+
         Usuario usuario = modelMapper.map(dto, Usuario.class);
         usuario.setFechaAlta(LocalDate.now());
         usuario.setActivo(true);
-        usuarioRepository.save(usuario);
 
+        // Hash de la contraseña
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        usuarioRepository.save(usuario);
         return true;
     }
 
@@ -79,8 +87,13 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin) throws Exception{
-        Usuario usuarioEntidad = usuarioRepository.findByUsuarioAndPasswordCaseSensitive(dtoLogin.getUsuario(), dtoLogin.getPassword());
+        Usuario usuarioEntidad = usuarioRepository.findByUsuario(dtoLogin.getUsuario());
         if(usuarioEntidad == null){
+            throw new Exception("Usuario y/o contraseña incorrecto");
+        }
+        // Utilizar BCryptPasswordEncoder para comparar la contraseña en texto plano
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(dtoLogin.getPassword(), usuarioEntidad.getPassword())) {
             throw new Exception("Usuario y/o contraseña incorrecto");
         }
         return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
