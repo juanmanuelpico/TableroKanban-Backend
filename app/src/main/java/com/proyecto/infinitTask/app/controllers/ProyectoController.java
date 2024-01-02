@@ -62,4 +62,14 @@ public class ProyectoController {
         }
     }
 
+    @GetMapping("/traerProyectoNombre/{nombre}")
+    public ResponseEntity<Object> obtenerProyectoPorId(@PathVariable String nombre) {
+
+        try {
+            ProyectoDTOResponse dtoProyecto = proyectoService.traerProyectoNombre(nombre);
+            return ResponseEntity.status(HttpStatus.OK).body(dtoProyecto);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

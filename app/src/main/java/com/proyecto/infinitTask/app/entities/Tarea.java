@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,16 +32,16 @@ public class Tarea {
     private boolean activo;
 
     @Column(name="fecha_creacion")
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
     @Column(name="fecha_inicio")
-    private LocalDateTime fechaInicio;
+    private LocalDate fechaInicio;
 
     @Column(name="fecha_actualizacion")
-    private LocalDateTime fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     @Column(name="fecha_fin")
-    private LocalDateTime fechaFin;
+    private LocalDate fechaFin;
 
     @Column(name="estado")
     private String estado;
@@ -55,6 +55,5 @@ public class Tarea {
     @ManyToOne
     @JoinColumn(name = "id_proyecto")
     private Proyecto proyecto;
-
 
 }

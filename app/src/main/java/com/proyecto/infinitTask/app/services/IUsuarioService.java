@@ -1,6 +1,5 @@
 package com.proyecto.infinitTask.app.services;
 
-
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
@@ -18,6 +17,5 @@ public interface IUsuarioService {
     public List<UsuarioDTOResponse> obtenerUsuarios() throws Exception;
 
     public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin)throws Exception;
-
 
 }

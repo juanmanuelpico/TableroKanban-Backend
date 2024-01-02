@@ -99,4 +99,17 @@ public class ProyectoService implements IProyectoService {
         return modelMapper.map(proyecto, ProyectoDTOResponse.class);
 
     }
+
+    @Override
+    public ProyectoDTOResponse traerProyectoNombre(String nombre) throws Exception {
+
+        Proyecto proyecto = proyectoRepository.findByNombre(nombre);
+
+        if(proyecto == null) {
+            throw new Exception("No se encontro el proyecto '" + nombre + "'.");
+        }
+
+        return modelMapper.map(proyecto, ProyectoDTOResponse.class);
+    }
+
 }

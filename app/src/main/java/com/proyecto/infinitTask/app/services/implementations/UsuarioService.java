@@ -27,75 +27,78 @@ public class UsuarioService implements IUsuarioService {
     @Autowired(required = true)
     private ModelMapper modelMapper;
 
+
     @Override
     public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
 
-        if (usuarioRepository.findByUsuario(dto.getUsuario()) != null) {
-            throw new Exception("El nombre del usuario ya existe");
-        }
-        if (usuarioRepository.findByEmail(dto.getEmail()) != null) {
-            throw new Exception("El mail ya se encuentra registrado");
+
+            if (usuarioRepository.findByUsuario(dto.getUsuario()) != null) {
+                throw new Exception("El nombre del usuario ya existe");
+            }
+            if (usuarioRepository.findByEmail(dto.getEmail()) != null) {
+                throw new Exception("El mail ya se encuentra registrado");
+            }
+
+            Usuario usuario = modelMapper.map(dto, Usuario.class);
+            usuario.setFechaAlta(LocalDate.now());
+            usuario.setActivo(true);
+
+            // Hash de la contraseña
+            usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+            usuarioRepository.save(usuario);
+            return true;
         }
 
-        Usuario usuario = modelMapper.map(dto, Usuario.class);
-        usuario.setFechaAlta(LocalDate.now());
-        usuario.setActivo(true);
+        @Override
+        public UsuarioDTOResponse traerUsuarioId ( int id)throws Exception {
+            Usuario usuarioExistente = usuarioRepository.findById(id);
 
-        // Hash de la contraseña
-        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
-        usuarioRepository.save(usuario);
-        return true;
+            if (usuarioExistente == null) {
+                throw new Exception("No se encontro el usuario con el id: " + usuarioExistente.getId());
+            }
+            return modelMapper.map(usuarioExistente, UsuarioDTOResponse.class);
+        }
+
+        @Override
+        public UsuarioDTOResponse traerUsuario (String usuario)throws Exception {
+            Usuario existente = usuarioRepository.findByUsuario(usuario);
+
+            if (existente == null) {
+                throw new Exception("No se encuentra el usuario " + existente.getUsuario());
+            }
+
+            return modelMapper.map(existente, UsuarioDTOResponse.class);
+
+        }
+
+        @Override
+        public List<UsuarioDTOResponse> obtenerUsuarios () throws Exception {
+
+            List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
+            List<Usuario> listaUsuarioEnt = usuarioRepository.findAll();
+
+            if (listaUsuarioEnt.isEmpty()) {
+                throw new Exception("La lista de usuarios esta vacía.");
+            }
+
+            for (Usuario u : listaUsuarioEnt) {
+                listaUsuarioDto.add(modelMapper.map(u, UsuarioDTOResponse.class));
+            }
+
+            return listaUsuarioDto;
+        }
+
+        @Override
+        public UsuarioDTOResponse traerUsuarioLogin (UsuarioDTOLogin dtoLogin) throws Exception {
+            Usuario usuarioEntidad = usuarioRepository.findByUsuario(dtoLogin.getUsuario());
+            if (usuarioEntidad == null) {
+                throw new Exception("Usuario y/o contraseña incorrecto");
+            }
+            // Utilizar BCryptPasswordEncoder para comparar la contraseña en texto plano
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (!passwordEncoder.matches(dtoLogin.getPassword(), usuarioEntidad.getPassword())) {
+                throw new Exception("Usuario y/o contraseña incorrecto");
+            }
+            return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
+        }
     }
-
-    @Override
-    public UsuarioDTOResponse traerUsuarioId(int id)throws Exception{
-        Usuario usuarioExistente = usuarioRepository.findById(id);
-
-        if(usuarioExistente == null){
-            throw new Exception("No se encontro el usuario con el id: " + usuarioExistente.getId());
-        }
-        return modelMapper.map(usuarioExistente, UsuarioDTOResponse.class);
-    }
-    @Override
-    public UsuarioDTOResponse traerUsuario(String usuario)throws Exception{
-        Usuario existente = usuarioRepository.findByUsuario(usuario);
-
-        if(existente == null){
-            throw new Exception("No se ecuentra el usuario " + existente.getUsuario());
-        }
-
-        return modelMapper.map(existente, UsuarioDTOResponse.class);
-
-    }
-
-    @Override
-    public List<UsuarioDTOResponse> obtenerUsuarios() throws Exception{
-
-        List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
-        List<Usuario> listaUsuarioEnt = usuarioRepository.findAll();
-
-        if(listaUsuarioEnt.isEmpty()) {
-            throw new Exception("La lista de usuarios esta vacía.");
-        }
-
-        for(Usuario u: listaUsuarioEnt){
-            listaUsuarioDto.add(modelMapper.map(u, UsuarioDTOResponse.class));
-        }
-
-        return listaUsuarioDto;
-    }
-
-    @Override
-    public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin) throws Exception{
-        Usuario usuarioEntidad = usuarioRepository.findByUsuario(dtoLogin.getUsuario());
-        if(usuarioEntidad == null){
-            throw new Exception("Usuario y/o contraseña incorrecto");
-        }
-        // Utilizar BCryptPasswordEncoder para comparar la contraseña en texto plano
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if (!passwordEncoder.matches(dtoLogin.getPassword(), usuarioEntidad.getPassword())) {
-            throw new Exception("Usuario y/o contraseña incorrecto");
-        }
-        return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
-    }
-}
