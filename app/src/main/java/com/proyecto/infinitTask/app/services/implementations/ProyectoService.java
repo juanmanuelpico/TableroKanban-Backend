@@ -2,6 +2,7 @@ package com.proyecto.infinitTask.app.services.implementations;
 
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
+import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IProyectoService;
@@ -28,6 +29,9 @@ public class ProyectoService implements IProyectoService {
     //Se coloca usuario repository ya que lo necesitamos para validar si el id del usuario existe
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ProyectoRepository proyectoRepository;
 
     @Override
     public List<ProyectoDTOResponse> obtenerProyectosDeUsuario(int idUsuario) throws Exception {
@@ -63,7 +67,6 @@ public class ProyectoService implements IProyectoService {
         return proyectosDTO;
     }
 
-
     public List<Proyecto> convertirObjetosEnProyectos(List<Object[]> objects) {
         List<Proyecto> proyectos = new ArrayList<>();
         for (Object[] object : objects) {
@@ -86,4 +89,27 @@ public class ProyectoService implements IProyectoService {
         return proyectos;
 
     }
+
+    public ProyectoDTOResponse traerProyectoId(int id) throws Exception {
+
+        Proyecto proyecto= proyectoRepository.findById(id);
+
+        if(proyecto == null)throw new Exception("ERROR: No se encontro el proyecto con id:" + id);
+
+        return modelMapper.map(proyecto, ProyectoDTOResponse.class);
+
+    }
+
+    @Override
+    public ProyectoDTOResponse traerProyectoNombre(String nombre) throws Exception {
+
+        Proyecto proyecto = proyectoRepository.findByNombre(nombre);
+
+        if(proyecto == null) {
+            throw new Exception("No se encontro el proyecto '" + nombre + "'.");
+        }
+
+        return modelMapper.map(proyecto, ProyectoDTOResponse.class);
+    }
+
 }

@@ -25,13 +25,13 @@ public class ProyectoController {
     private IProyectoService proyectoService;
 
     @GetMapping("/traerProyectos/{idUsuario}")
-    public ResponseEntity<Object> obtenerProyectosDeUsuario(@PathVariable int idUsuario){
-        try{
+    public ResponseEntity<Object> obtenerProyectosDeUsuario(@PathVariable int idUsuario) {
+        try {
 
             List<ProyectoDTOResponse> dtos = proyectoService.obtenerProyectosDeUsuario(idUsuario);
 
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
-        }catch(Exception e){
+        } catch (Exception e) {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
@@ -39,8 +39,8 @@ public class ProyectoController {
 
     @GetMapping("/traerProyectosInicioFin/{idUsuario}")
     public ResponseEntity<Object> obtenerProyectosDeUsuarioFechaDesdeFechaHasta(@PathVariable int idUsuario,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaDesde,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaHasta) {
+                                                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaDesde,
+                                                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaHasta) {
         try {
             List<ProyectoDTOResponse> dtos = proyectoService.obtenerProyectosDeUsuarioDesdeHasta(idUsuario, fechaDesde, fechaHasta);
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
@@ -49,4 +49,27 @@ public class ProyectoController {
         }
     }
 
+    @GetMapping("/traerProyectoId/{id}")
+    public ResponseEntity<Object> obtenerProyectoPorId(@PathVariable int id) {
+
+        try {
+            ProyectoDTOResponse dtoProyecto = proyectoService.traerProyectoId(id);
+
+            return ResponseEntity.status(HttpStatus.OK).body(dtoProyecto);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/traerProyectoNombre/{nombre}")
+    public ResponseEntity<Object> obtenerProyectoPorId(@PathVariable String nombre) {
+
+        try {
+            ProyectoDTOResponse dtoProyecto = proyectoService.traerProyectoNombre(nombre);
+            return ResponseEntity.status(HttpStatus.OK).body(dtoProyecto);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

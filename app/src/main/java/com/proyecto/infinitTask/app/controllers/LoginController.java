@@ -18,7 +18,7 @@ public class LoginController {
     @PostMapping("")
     public ResponseEntity<Object> login(@RequestBody UsuarioDTOLogin dtoLogin){
        try{
-           UsuarioDTOResponse response= usuarioService.traerUsuarioLogin(dtoLogin);
+           UsuarioDTOResponse response = usuarioService.traerUsuarioLogin(dtoLogin);
            return new ResponseEntity<>(response, HttpStatus.OK);
 
        }catch (Exception e){

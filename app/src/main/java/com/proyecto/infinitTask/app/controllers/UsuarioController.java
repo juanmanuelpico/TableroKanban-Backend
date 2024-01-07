@@ -22,7 +22,7 @@ public class UsuarioController {
 
    //Este controlador recibe un body desde el front y lo convierte a UsuarioDTORequest
    //Luego convierte el dto a entidad para guardarlo en la base de datos
-    //Finalmente devuelve un body para que el front puede saber  travez de una msj si el
+    //Finalmente devuelve un body para que el front puede saber a través de una msj si el
     //usuario fue ingresado correctamente
     @PostMapping("/registro")
     public ResponseEntity<Object> crearUsuario(@RequestBody UsuarioDTORequest dto){
