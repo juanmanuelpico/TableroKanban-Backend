@@ -1,0 +1,27 @@
+Service URI
+mysql://CLICK_TO:REVEAL_PASSWORD@mysql-8abd202-picojuan322-e05f.a.aivencloud.com:16176/defaultdb?ssl-mode=REQUIRED
+
+Replica URI
+mysql://CLICK_TO:REVEAL_PASSWORD@replica-mysql-8abd202-picojuan322-e05f.a.aivencloud.com:16176/defaultdb?ssl-mode=REQUIRED
+
+Database name
+defaultdb
+
+Host
+mysql-8abd202-picojuan322-e05f.a.aivencloud.com
+
+Port
+16176
+
+User
+avnadmin
+
+Password
+AVNS_M-OW6queFX2JxK8gTWA
+
+
+SSL mode
+REQUIRED
+
+CA certificate
+Show
