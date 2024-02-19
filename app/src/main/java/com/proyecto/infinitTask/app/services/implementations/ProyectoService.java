@@ -1,11 +1,16 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
+import com.proyecto.infinitTask.app.dtos.request.Proyecto.ProyectoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
+import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
 import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
+import com.proyecto.infinitTask.app.repositories.RolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
+import com.proyecto.infinitTask.app.services.IProyectoRolUsuarioService;
 import com.proyecto.infinitTask.app.services.IProyectoService;
+import com.proyecto.infinitTask.app.services.IRolUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +37,31 @@ public class ProyectoService implements IProyectoService {
 
     @Autowired
     private ProyectoRepository proyectoRepository;
+
+    @Autowired
+    private IProyectoRolUsuarioService proyectoRolUsuarioService;
+
+    @Autowired
+    private RolUsuarioRepository rolUsuarioRepository;
+
+    @Override
+    public boolean crearProyecto(ProyectoDTORequest dtoProyecto) {
+
+        Proyecto proyecto = new Proyecto();
+
+        proyecto.setNombre(dtoProyecto.getNombre());
+        proyecto.setDescripcion(dtoProyecto.getDescripcion());
+
+        proyecto.setFechaInicio(LocalDate.now());
+        proyecto.setActivo(true);
+        //se guarda el proyecto en la bd
+        proyectoRepository.save(proyecto);
+
+        //se llama al metodo que crea la relacion entre el usuario rol y proyecto.
+        proyectoRolUsuarioService.crearProyectoRolUsuario(proyectoRepository.findByNombre(dtoProyecto.getNombre()), usuarioRepository.findById(dtoProyecto.getIdUsuario()), rolUsuarioRepository.findById(1));
+
+        return true;
+    }
 
     @Override
     public List<ProyectoDTOResponse> obtenerProyectosDeUsuario(int idUsuario) throws Exception {

@@ -27,10 +27,8 @@ public class UsuarioService implements IUsuarioService {
     @Autowired(required = true)
     private ModelMapper modelMapper;
 
-
     @Override
     public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
-
 
             if (usuarioRepository.findByUsuario(dto.getUsuario()) != null) {
                 throw new Exception("El nombre del usuario ya existe");

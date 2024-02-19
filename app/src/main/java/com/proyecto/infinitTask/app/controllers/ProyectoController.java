@@ -1,5 +1,7 @@
 package com.proyecto.infinitTask.app.controllers;
 
+import com.proyecto.infinitTask.app.dtos.request.Proyecto.ProyectoDTORequest;
+import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
@@ -19,10 +21,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/proyecto")
+@CrossOrigin(origins = "http://localhost:3000") // Permitir solicitudes desde localhost:3000
 public class ProyectoController {
 
     @Autowired
     private IProyectoService proyectoService;
+
+    @PostMapping("/crear")
+    public ResponseEntity<Object> crearProyecto(@RequestBody ProyectoDTORequest dto){
+        try{
+            proyectoService.crearProyecto(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Proyecto creado exitosamente"));
+            //ES EQUIVALENTE
+            //return new ResponseEntity<>(new Mensaje("Usuario creado exitosamente"), HttpStatus.CREATED );
+
+        }catch(Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+            //ES EQUIVALENTE
+            // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 
     @GetMapping("/traerProyectos/{idUsuario}")
     public ResponseEntity<Object> obtenerProyectosDeUsuario(@PathVariable int idUsuario) {
