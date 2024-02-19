@@ -40,7 +40,7 @@ public class ProyectoController {
             //ES EQUIVALENTE
             // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
-    }commit
+    }
 
     @GetMapping("/traerProyectos/{idUsuario}")
     public ResponseEntity<Object> obtenerProyectosDeUsuario(@PathVariable int idUsuario) {
