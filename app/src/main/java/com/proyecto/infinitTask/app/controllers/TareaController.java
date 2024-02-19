@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tarea")
+@CrossOrigin(origins = "http://localhost:3000") // Permitir solicitudes desde localhost:3000
 public class TareaController {
 
     @Autowired private ITareaService tareaService;

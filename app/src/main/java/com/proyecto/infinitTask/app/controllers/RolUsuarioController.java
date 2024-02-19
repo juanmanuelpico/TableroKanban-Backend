@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rolUsuario")
+@CrossOrigin(origins = "http://localhost:3000") // Permitir solicitudes desde localhost:3000
 public class RolUsuarioController {
 
     @Autowired
