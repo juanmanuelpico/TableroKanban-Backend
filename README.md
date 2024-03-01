@@ -10,7 +10,7 @@ Este proyecto es una API REST desarrollada en Java con el framework Spring Boot.
 ## Pasos para levantar la API localmente:
 - Tener instalado Java Development Kit (JDK) 17 y Maven
 - Clonar el repositorio: git clone https://github.com/juanmanuelpico/proyecto-kanban-back.git
-- Cambian a la rama main: git switch main / git checkout main
+- Cambiar a la rama main: git switch main / git checkout main
 - Compilar el proyecto: mvn clean install
 - **La API estará disponible en: http://localhost:8080
 ## Contribución
