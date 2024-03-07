@@ -90,4 +90,14 @@ public class ProyectoController {
             return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/bajaProyecto/{id}")
+    public ResponseEntity<Object> bajaProyecto(@PathVariable int id) {
+        try {
+            proyectoService.bajaLogicaProyecto(id);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Proyecto eliminado exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 }
