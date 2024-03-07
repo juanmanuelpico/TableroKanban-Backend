@@ -142,4 +142,13 @@ public class ProyectoService implements IProyectoService {
         return modelMapper.map(proyecto, ProyectoDTOResponse.class);
     }
 
+    @Override
+    public void bajaLogicaProyecto(int id) throws Exception {
+        Proyecto proyecto = proyectoRepository.findById(id);
+        if(proyecto == null){
+            throw  new Exception("Nose encontro el proyecto con id: "+id+".");
+        }
+        proyecto.setActivo(false);
+        proyectoRepository.save(proyecto);
+    }
 }
