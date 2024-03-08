@@ -71,10 +71,7 @@ public class ProyectoService implements IProyectoService {
         }
 
         List<Proyecto> proyectos = this.convertirObjetosEnProyectos(proyectoRolUsuarioRepository.findProyectosByUsuario(idUsuario));
-
-        if (proyectos.isEmpty()) {
-            throw new Exception("No existe ningun proyecto para el usuario");
-        }
+        
         //esta linea convierte el listado de proyectos en dto
         List<ProyectoDTOResponse> dtos = proyectos.stream().map(proyecto -> modelMapper.map(proyecto, ProyectoDTOResponse.class)).collect(Collectors.toList());
 
@@ -142,4 +139,13 @@ public class ProyectoService implements IProyectoService {
         return modelMapper.map(proyecto, ProyectoDTOResponse.class);
     }
 
+    @Override
+    public void bajaLogicaProyecto(int id) throws Exception {
+        Proyecto proyecto = proyectoRepository.findById(id);
+        if(proyecto == null){
+            throw  new Exception("No se encontro el proyecto con id: "+id+".");
+        }
+        proyecto.setActivo(!proyecto.isActivo());
+        proyectoRepository.save(proyecto);
+    }
 }

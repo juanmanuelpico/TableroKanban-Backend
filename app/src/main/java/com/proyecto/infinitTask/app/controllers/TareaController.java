@@ -18,7 +18,7 @@ public class TareaController {
 
     @Autowired private ITareaService tareaService;
 
-    @PostMapping("/registro")
+    @PostMapping("/crearTarea")
     public ResponseEntity<Object> crearTarea(@RequestBody TareaDTORequest dto) {
 
         try {
