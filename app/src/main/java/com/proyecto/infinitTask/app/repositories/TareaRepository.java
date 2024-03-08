@@ -14,5 +14,4 @@ public interface TareaRepository extends JpaRepository<Tarea, Integer> {
     @Query(value = "SELECT * FROM tarea t  WHERE t.id_proyecto = :id", nativeQuery = true)
     List<Tarea>findByIdProyecto(@Param("id") int id);
 
-
 }

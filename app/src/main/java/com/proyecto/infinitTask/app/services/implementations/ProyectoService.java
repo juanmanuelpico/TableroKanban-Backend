@@ -146,9 +146,9 @@ public class ProyectoService implements IProyectoService {
     public void bajaLogicaProyecto(int id) throws Exception {
         Proyecto proyecto = proyectoRepository.findById(id);
         if(proyecto == null){
-            throw  new Exception("Nose encontro el proyecto con id: "+id+".");
+            throw  new Exception("No se encontro el proyecto con id: "+id+".");
         }
-        proyecto.setActivo(false);
+        proyecto.setActivo(!proyecto.isActivo());
         proyectoRepository.save(proyecto);
     }
 }
