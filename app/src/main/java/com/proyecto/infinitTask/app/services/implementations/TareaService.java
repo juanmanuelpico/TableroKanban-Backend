@@ -40,7 +40,6 @@ public class TareaService implements ITareaService {
         List<TareaDTOResponse> tareasDto = new ArrayList<>();
         List<Tarea> tareas = tareaRepository.findByIdProyecto(idProyecto);
 
-        if(tareas.isEmpty())throw new Exception("No hay tareas disponibles");
         for (Tarea t : tareas) {
             tareasDto.add(modelMapper.map(t, TareaDTOResponse.class));
         }
