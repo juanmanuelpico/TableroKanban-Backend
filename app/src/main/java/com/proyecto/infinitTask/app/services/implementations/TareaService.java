@@ -3,8 +3,10 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.Tarea;
 import com.proyecto.infinitTask.app.entities.Usuario;
+import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.TareaRepository;
 import com.proyecto.infinitTask.app.services.ITareaService;
 import org.modelmapper.ModelMapper;
@@ -24,12 +26,22 @@ public class TareaService implements ITareaService {
     @Autowired(required = true)
     private ModelMapper modelMapper;
 
+    @Autowired
+    private ProyectoRepository proyectoRepository;
+
     @Override
     public boolean crearTarea(TareaDTORequest dto) throws Exception { //FALTA VALIDAR
+        Proyecto proyecto = proyectoRepository.findById(dto.getIdProyecto());
+        Tarea tarea = new Tarea();
 
-        Tarea tarea = modelMapper.map(dto, Tarea.class);
-        tarea.setFechaCreacion(LocalDate.now());
         tarea.setActivo(true);
+        tarea.setDescripcion(dto.getDescripcion());
+        tarea.setDificultad(1);
+        tarea.setEstado("PARA HACER");
+        tarea.setFechaCreacion(LocalDate.now());
+        tarea.setFechaInicio(LocalDate.now());
+        tarea.setProyecto(proyecto);
+
         tareaRepository.save(tarea);
 
         return true;

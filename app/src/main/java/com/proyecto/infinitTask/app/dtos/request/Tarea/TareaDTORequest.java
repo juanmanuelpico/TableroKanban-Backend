@@ -17,6 +17,8 @@ import java.util.Set;
 
 public class TareaDTORequest {
 
+    private int idProyecto;
+
     private String titulo;
 
     private String descripcion;
@@ -36,7 +38,5 @@ public class TareaDTORequest {
     private  int dificultad;
 
     private Set<Usuario> usuarios;
-
-    private Proyecto proyecto;
 
 }

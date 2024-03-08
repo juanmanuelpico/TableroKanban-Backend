@@ -35,7 +35,6 @@ public class TareaController {
 
         try{
             List<TareaDTOResponse>tareasDto=tareaService.traerTareas(idProyecto);
-
             return ResponseEntity.status(HttpStatus.OK).body(tareasDto);
         }catch (Exception e){
 
