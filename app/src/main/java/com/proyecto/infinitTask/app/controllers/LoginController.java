@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(origins = "http://localhost:3000") // Permitir solicitudes desde localhost:3000
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class LoginController {
     @Autowired
     private IUsuarioService usuarioService;
