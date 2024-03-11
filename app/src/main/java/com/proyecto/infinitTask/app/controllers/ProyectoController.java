@@ -45,12 +45,19 @@ public class ProyectoController {
     @GetMapping("/traerProyectos/{idUsuario}")
     public ResponseEntity<Object> obtenerProyectosDeUsuario(@PathVariable int idUsuario) {
         try {
-
             List<ProyectoDTOResponse> dtos = proyectoService.obtenerProyectosDeUsuario(idUsuario);
-
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 
+    @GetMapping("/buscarProyectos/{idUsuario}/{nombreProyecto}")
+    public ResponseEntity<Object> buscarProyectos(@PathVariable int idUsuario, @PathVariable String nombreProyecto) {
+        try {
+            List<ProyectoDTOResponse> dtos = proyectoService.buscarProyectosPorNombre(idUsuario, nombreProyecto);
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
     }

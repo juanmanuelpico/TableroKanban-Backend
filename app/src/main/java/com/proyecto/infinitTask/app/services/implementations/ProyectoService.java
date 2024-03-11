@@ -79,6 +79,18 @@ public class ProyectoService implements IProyectoService {
     }
 
     @Override
+    public List<ProyectoDTOResponse> buscarProyectosPorNombre(int idUsuario, String nombreProyecto) throws Exception {
+        if (usuarioRepository.findById(idUsuario) == null) {
+            throw new Exception("El usuario con id " + idUsuario + " No existe");
+        }
+        List<Proyecto> proyectos = this.convertirObjetosEnProyectos(proyectoRolUsuarioRepository.findProyectosByUsuarioAndNombreProyecto(idUsuario, nombreProyecto));
+
+        List<ProyectoDTOResponse> dtos = proyectos.stream().map(proyecto -> modelMapper.map(proyecto, ProyectoDTOResponse.class)).collect(Collectors.toList());
+
+        return dtos;
+    }
+
+    @Override
     public List<ProyectoDTOResponse> obtenerProyectosDeUsuarioDesdeHasta(int idUsuario, LocalDate fechaInicio, LocalDate fechaFin) throws Exception {
 
         List<Proyecto> proyectosEnt = this.convertirObjetosEnProyectos(proyectoRolUsuarioRepository.findByUsuarioAndFechaInicioFechaFin(idUsuario, fechaInicio, fechaFin));
