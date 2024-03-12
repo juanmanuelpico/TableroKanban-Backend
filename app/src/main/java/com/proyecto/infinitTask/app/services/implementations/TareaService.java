@@ -34,6 +34,7 @@ public class TareaService implements ITareaService {
         Proyecto proyecto = proyectoRepository.findById(dto.getIdProyecto());
         Tarea tarea = new Tarea();
 
+        tarea.setTitulo(dto.getTitulo());
         tarea.setActivo(true);
         tarea.setDescripcion(dto.getDescripcion());
         tarea.setDificultad(1);
