@@ -17,6 +17,8 @@ public class TareaDTOResponse {
 
     private int id;
 
+    private String titulo;
+
     private boolean activo;
 
     private String descripcion;
