@@ -158,6 +158,7 @@ public class ProyectoService implements IProyectoService {
             throw  new Exception("No se encontro el proyecto con id: "+id+".");
         }
         proyecto.setActivo(!proyecto.isActivo());
+        proyecto.setFechaFin(LocalDate.now());
         proyectoRepository.save(proyecto);
     }
 }
