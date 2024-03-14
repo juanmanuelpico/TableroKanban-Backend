@@ -42,7 +42,7 @@ public class TareaService implements ITareaService {
         tarea.setFechaCreacion(LocalDate.now());
         tarea.setFechaInicio(LocalDate.now());
         tarea.setProyecto(proyecto);
-
+        
         tareaRepository.save(tarea);
 
         return true;

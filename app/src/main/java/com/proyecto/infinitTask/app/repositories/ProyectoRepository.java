@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 
    Proyecto findById(int id);
-
    Proyecto findByNombre(String nombre);
 
 }

@@ -3,14 +3,12 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Proyecto.ProyectoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
-import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
 import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.RolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IProyectoRolUsuarioService;
 import com.proyecto.infinitTask.app.services.IProyectoService;
-import com.proyecto.infinitTask.app.services.IRolUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -159,6 +157,17 @@ public class ProyectoService implements IProyectoService {
         }
         proyecto.setActivo(!proyecto.isActivo());
         proyecto.setFechaFin(LocalDate.now());
+        proyectoRepository.save(proyecto);
+    }
+
+    @Override
+    public void editarNombreDescripcionProyecto(int id, String nombre, String descripcion) throws Exception {
+        Proyecto proyecto = proyectoRepository.findById(id);
+        if(proyecto == null){
+            throw  new Exception("No se encontro el proyecto con id: "+id+".");
+        }
+        proyecto.setNombre(nombre);
+        proyecto.setDescripcion(descripcion);
         proyectoRepository.save(proyecto);
     }
 }

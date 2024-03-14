@@ -16,4 +16,6 @@ public interface IProyectoService {
 
     ProyectoDTOResponse traerProyectoNombre(String nombre) throws Exception;
     public void bajaLogicaProyecto(int id) throws  Exception;
+
+    public void editarNombreDescripcionProyecto(int id, String nombre, String descripcion) throws Exception;
 }

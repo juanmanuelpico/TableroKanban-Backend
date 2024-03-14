@@ -107,4 +107,14 @@ public class ProyectoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
     }
+
+    @PutMapping("/editarProyecto/{id}/{nombre}/{descripcion}")
+    public ResponseEntity<Object> bajaProyecto(@PathVariable int id, @PathVariable String nombre, @PathVariable String descripcion) {
+        try {
+            proyectoService.editarNombreDescripcionProyecto(id, nombre, descripcion);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Proyecto editado exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 }
