@@ -59,4 +59,15 @@ public class TareaService implements ITareaService {
         return tareasDto;
 
     }
+
+    @Override
+    public List<TareaDTOResponse> buscarTareasIdNombre(int idProyecto, String nombre) throws Exception {
+        List<TareaDTOResponse> tareasDto = new ArrayList<>();
+        List<Tarea> tareas = tareaRepository.findByIdProyectoNombreTarea(idProyecto, nombre);
+
+        for (Tarea t : tareas) {
+            tareasDto.add(modelMapper.map(t, TareaDTOResponse.class));
+        }
+        return tareasDto;
+    }
 }

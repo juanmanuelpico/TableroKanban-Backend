@@ -42,4 +42,16 @@ public class TareaController {
         }
     }
 
+    @GetMapping("/buscarTareasIdNombre/{idProyecto}/{nombreTarea}")
+    public ResponseEntity<Object> obtenerTareas(@PathVariable int idProyecto, @PathVariable String nombreTarea){
+
+        try{
+            List<TareaDTOResponse>tareasDto=tareaService.buscarTareasIdNombre(idProyecto, nombreTarea);
+            return ResponseEntity.status(HttpStatus.OK).body(tareasDto);
+        }catch (Exception e){
+
+            return new ResponseEntity<>(new Mensaje(e.getMessage()),HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

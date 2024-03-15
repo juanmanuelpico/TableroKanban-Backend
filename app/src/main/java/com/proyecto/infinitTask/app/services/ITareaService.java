@@ -11,4 +11,5 @@ public interface ITareaService {
 
     public List<TareaDTOResponse>traerTareas(int idProyecto) throws Exception;
 
+    public List<TareaDTOResponse>buscarTareasIdNombre(int idProyecto, String nombre)throws Exception;
 }
