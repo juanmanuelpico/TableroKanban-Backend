@@ -109,7 +109,7 @@ public class ProyectoController {
     }
 
     @PutMapping("/editarProyecto/{id}/{nombre}/{descripcion}")
-    public ResponseEntity<Object> bajaProyecto(@PathVariable int id, @PathVariable String nombre, @PathVariable String descripcion) {
+    public ResponseEntity<Object> editarProyecto(@PathVariable int id, @PathVariable String nombre, @PathVariable String descripcion) {
         try {
             proyectoService.editarNombreDescripcionProyecto(id, nombre, descripcion);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Proyecto editado exitosamente"));
