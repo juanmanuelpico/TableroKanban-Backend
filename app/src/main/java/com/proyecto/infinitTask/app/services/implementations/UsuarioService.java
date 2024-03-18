@@ -99,4 +99,4 @@ public class UsuarioService implements IUsuarioService {
             }
             return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
         }
-    }
+}

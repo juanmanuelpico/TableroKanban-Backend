@@ -17,5 +17,4 @@ public interface IUsuarioService {
     public List<UsuarioDTOResponse> obtenerUsuarios() throws Exception;
 
     public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin)throws Exception;
-
 }
