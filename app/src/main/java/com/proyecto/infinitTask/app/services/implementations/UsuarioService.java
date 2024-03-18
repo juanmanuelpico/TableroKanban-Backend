@@ -99,4 +99,23 @@ public class UsuarioService implements IUsuarioService {
             }
             return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
         }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public void editarUsuario(UsuarioDTORequest dto) throws Exception {
+        Usuario usuario = usuarioRepository.findById(dto.getId());
+        if(usuario == null){
+            throw new Exception("El usuario: "+ dto.getId() +" no se encontro para editar");
+        }
+        usuario.setApellido(dto.getApellido());
+        usuario.setNombre(dto.getNombre());
+        usuario.setEmail(dto.getEmail());
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        usuario.setFechaActualizacion(LocalDate.now());
+        usuario.setUsuario(dto.getUsuario());
+
+        usuarioRepository.save(usuario);
+    }
+>>>>>>> main
 }

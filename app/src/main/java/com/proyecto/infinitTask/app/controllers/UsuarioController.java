@@ -73,4 +73,14 @@ public class UsuarioController {
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/editarUsuario")
+    public ResponseEntity<Object>editarUsuario(@RequestBody UsuarioDTORequest dto){
+        try{
+            usuarioService.editarUsuario(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario cambiado perfectamente"));
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 }
