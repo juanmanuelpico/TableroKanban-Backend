@@ -18,4 +18,6 @@ public interface IUsuarioService {
 
     public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin)throws Exception;
 
+    public void editarUsuario(UsuarioDTORequest dto)throws Exception;
+
 }

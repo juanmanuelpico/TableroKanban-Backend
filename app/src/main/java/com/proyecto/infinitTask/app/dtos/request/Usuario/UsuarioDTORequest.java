@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class UsuarioDTORequest {
 
+    private int id;
+
     private String usuario;
 
     private String password;
