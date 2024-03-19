@@ -99,8 +99,6 @@ public class UsuarioService implements IUsuarioService {
             }
             return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
         }
-<<<<<<< HEAD
-=======
 
     @Override
     public void editarUsuario(UsuarioDTORequest dto) throws Exception {
@@ -117,5 +115,4 @@ public class UsuarioService implements IUsuarioService {
 
         usuarioRepository.save(usuario);
     }
->>>>>>> main
 }
