@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("usuarioService")
 public class UsuarioService implements IUsuarioService {
@@ -86,7 +87,19 @@ public class UsuarioService implements IUsuarioService {
             return listaUsuarioDto;
         }
 
-        @Override
+    @Override
+    public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombre) throws Exception {
+        List<Usuario> listaUsuarios = usuarioRepository.findAllByUsuario(nombre);
+        List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
+
+        if(!listaUsuarios.isEmpty()){
+            listaUsuarioDto = listaUsuarios.stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
+        }
+
+        return listaUsuarioDto;
+    }
+
+    @Override
         public UsuarioDTOResponse traerUsuarioLogin (UsuarioDTOLogin dtoLogin) throws Exception {
             Usuario usuarioEntidad = usuarioRepository.findByUsuario(dtoLogin.getUsuario());
             if (usuarioEntidad == null) {
