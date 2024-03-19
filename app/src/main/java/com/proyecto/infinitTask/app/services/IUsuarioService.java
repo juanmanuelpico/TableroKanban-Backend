@@ -16,6 +16,8 @@ public interface IUsuarioService {
 
     public List<UsuarioDTOResponse> obtenerUsuarios() throws Exception;
 
+    public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombre) throws Exception;
+
     public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin)throws Exception;
 
     public void editarUsuario(UsuarioDTORequest dto)throws Exception;

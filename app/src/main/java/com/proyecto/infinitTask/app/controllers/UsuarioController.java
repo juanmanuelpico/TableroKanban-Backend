@@ -74,6 +74,16 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/traerUsuariosPorNombreUsuario/{nombre}")
+    public ResponseEntity<Object> obtenerUsuariosPorNombreUsuario(@PathVariable String nombre){
+        try{
+            List<UsuarioDTOResponse> listaDto = usuarioService.obtenerUsuariosPorNombre(nombre);
+            return ResponseEntity.status(HttpStatus.OK).body(listaDto);
+        } catch (Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping("/editarUsuario")
     public ResponseEntity<Object>editarUsuario(@RequestBody UsuarioDTORequest dto){
         try{
