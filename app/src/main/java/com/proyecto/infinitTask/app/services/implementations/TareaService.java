@@ -2,10 +2,8 @@ package com.proyecto.infinitTask.app.services.implementations;
 
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
-import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.Tarea;
-import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.TareaRepository;
 import com.proyecto.infinitTask.app.services.ITareaService;
@@ -51,7 +49,7 @@ public class TareaService implements ITareaService {
     public List<TareaDTOResponse> traerTareas(int idProyecto) throws Exception {
 
         List<TareaDTOResponse> tareasDto = new ArrayList<>();
-        List<Tarea> tareas = tareaRepository.findByIdProyecto(idProyecto);
+        List<Tarea> tareas = tareaRepository.findByIdProyectoAndActive(idProyecto);
 
         for (Tarea t : tareas) {
             tareasDto.add(modelMapper.map(t, TareaDTOResponse.class));
@@ -69,5 +67,16 @@ public class TareaService implements ITareaService {
             tareasDto.add(modelMapper.map(t, TareaDTOResponse.class));
         }
         return tareasDto;
+    }
+
+    @Override
+    public void bajaLogicaTarea(int id) throws Exception {
+        Tarea tarea = (Tarea) tareaRepository.findById(id);
+        if(tarea == null){
+            throw  new Exception("No se encontro la tarea con id: "+id+".");
+        }
+        tarea.setActivo(!tarea.isActivo());
+        tarea.setFechaFin(LocalDate.now());
+        tareaRepository.save(tarea);
     }
 }

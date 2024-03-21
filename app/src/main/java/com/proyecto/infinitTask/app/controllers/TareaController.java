@@ -53,4 +53,14 @@ public class TareaController {
             return new ResponseEntity<>(new Mensaje(e.getMessage()),HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/bajaTarea/{id}")
+    public ResponseEntity<Object> bajaTarea(@PathVariable int id) {
+        try {
+            tareaService.bajaLogicaTarea(id);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Tarea eliminada exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
 }
