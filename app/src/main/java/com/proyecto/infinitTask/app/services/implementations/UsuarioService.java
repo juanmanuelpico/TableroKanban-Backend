@@ -6,6 +6,7 @@ import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
+import com.proyecto.infinitTask.app.services.IProyectoService;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class UsuarioService implements IUsuarioService {
 
     @Autowired(required = true)
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IProyectoService proyectoService;
 
     @Override
     public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
@@ -103,17 +107,15 @@ public class UsuarioService implements IUsuarioService {
 
     //se recibe el id del proyecto para que la query pueda obtener todos los usuarios que no pertenezcan a ese proyecto
     @Override
-    public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombre, int idProyecto) throws Exception {
-        List<Usuario> listaUsuarios = usuarioRepository.findAllByUsuario(nombre);
+    public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombreUsuario, int idProyecto) throws Exception {
+        List<Usuario> listaUsuarios = usuarioRepository.findAllUsuariosNotInProyecto(nombreUsuario, idProyecto);
         List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
 
-
-        if(!listaUsuarios.isEmpty()){
-            for(Usuario usuario : listaUsuarios){
-                listaUsuarioDto.add(modelMapper.map(usuario, UsuarioDTOResponse.class));
+        if(!listaUsuarios.isEmpty()) {
+            for (Usuario usuario : listaUsuarios) {
+                    listaUsuarioDto.add(modelMapper.map(usuario, UsuarioDTOResponse.class));
             }
         }
-
         return listaUsuarioDto;
     }
 

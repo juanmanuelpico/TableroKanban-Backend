@@ -77,26 +77,10 @@ public class ProyectoService implements IProyectoService {
 
     @Override
     public List<ProyectoDTOResponse> obtenerProyectosDeUsuario(int idUsuario) throws Exception {
-        //traemos el usuario por id
-        Usuario usuario = usuarioRepository.findById(idUsuario);
-
-        if (usuario == null) {
+        if (usuarioRepository.findById(idUsuario) == null) {
             throw new Exception("El usuario con id " + idUsuario + " No existe");
         }
-
-        //creamos listado de proyectos
-        List<Proyecto> proyectos = new ArrayList<>();
-
-        //recorremos el listado de ProyectoRolUsuario de ese Usuario
-        for(ProyectoRolUsuario pru : usuario.getProyectoRolUsuarios()){
-            //obtenemos el proyecto
-            if(pru.getProyecto().isActivo()) {
-                proyectos.add(pru.getProyecto());
-            }
-        }
-        //de la anterior forma, podemos obtener todos los proyectos a los que pertenece un usuario
-        
-        //esta linea convierte el listado de proyectos en dto
+        List<Proyecto> proyectos = proyectoRepository.findAllProyectosByUsuarioId(idUsuario);
         List<ProyectoDTOResponse> dtos = proyectos.stream().map(proyecto -> modelMapper.map(proyecto, ProyectoDTOResponse.class)).collect(Collectors.toList());
 
         return dtos;
@@ -107,7 +91,7 @@ public class ProyectoService implements IProyectoService {
         if (usuarioRepository.findById(idUsuario) == null) {
             throw new Exception("El usuario con id " + idUsuario + " No existe");
         }
-        List<Proyecto> proyectos = this.convertirObjetosEnProyectos(proyectoRolUsuarioRepository.findProyectosByUsuarioAndNombreProyecto(idUsuario, nombreProyecto));
+        List<Proyecto> proyectos = proyectoRepository.findProyectosByUsuarioAndNombreProyecto(idUsuario, nombreProyecto);
 
         List<ProyectoDTOResponse> dtos = proyectos.stream().map(proyecto -> modelMapper.map(proyecto, ProyectoDTOResponse.class)).collect(Collectors.toList());
 
