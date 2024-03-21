@@ -40,4 +40,14 @@ public class RolUsuarioService implements IRolUsuarioService {
 
        return listaRolUsuarioDto;
     }
+
+    @Override
+    public RolUsuario obtenerRolEntidadPorId(int id) throws Exception {
+        RolUsuario rol = rolUsuarioRepository.findById(id);
+
+        if(rol == null){
+            throw new Exception("El rol con id: "+id+", no exite en la bd");
+        }
+        return rol;
+    }
 }

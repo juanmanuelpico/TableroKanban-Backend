@@ -22,6 +22,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value = "SELECT * FROM usuario u WHERE u.usuario LIKE %:usuario%", nativeQuery = true)
     List<Usuario> findAllByUsuario(@Param("usuario") String usuario);
 
+
     @Query(value = "SELECT * FROM usuario u WHERE BINARY u.usuario = :usuario AND u.password = :password", nativeQuery = true)
     Usuario findByUsuarioAndPasswordCaseSensitive(@Param("usuario") String usuario, @Param("password") String password);
 

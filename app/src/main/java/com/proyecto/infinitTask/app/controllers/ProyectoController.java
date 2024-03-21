@@ -1,10 +1,12 @@
 package com.proyecto.infinitTask.app.controllers;
 
 import com.proyecto.infinitTask.app.dtos.request.Proyecto.ProyectoDTORequest;
+import com.proyecto.infinitTask.app.dtos.request.ProyectoRolUsuario.ProyectoRolUsuarioDTO;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
+import com.proyecto.infinitTask.app.services.IProyectoRolUsuarioService;
 import com.proyecto.infinitTask.app.services.IProyectoService;
 import com.proyecto.infinitTask.app.util.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ public class ProyectoController {
 
     @Autowired
     private IProyectoService proyectoService;
+
 
     @PostMapping("/crear")
     public ResponseEntity<Object> crearProyecto(@RequestBody ProyectoDTORequest dto){
@@ -113,6 +116,16 @@ public class ProyectoController {
         try {
             proyectoService.editarNombreDescripcionProyecto(id, nombre, descripcion);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Proyecto editado exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
+
+    @PostMapping("/agregarUsuarioAProyecto")
+    public ResponseEntity<Object> agregarUsuarioAProyectoConRol(@RequestBody ProyectoRolUsuarioDTO dto){
+        try {
+            proyectoService.agregarUsuarioAProyectoConRol(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario agregado exitosamente"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
