@@ -1,8 +1,11 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
 import com.proyecto.infinitTask.app.dtos.request.Proyecto.ProyectoDTORequest;
+import com.proyecto.infinitTask.app.dtos.request.ProyectoRolUsuario.ProyectoRolUsuarioDTO;
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
+import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
+import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.RolUsuarioRepository;
@@ -11,6 +14,7 @@ import com.proyecto.infinitTask.app.services.IProyectoRolUsuarioService;
 import com.proyecto.infinitTask.app.services.IProyectoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -37,6 +41,7 @@ public class ProyectoService implements IProyectoService {
     private ProyectoRepository proyectoRepository;
 
     @Autowired
+    @Lazy
     private IProyectoRolUsuarioService proyectoRolUsuarioService;
 
     @Autowired
@@ -62,13 +67,34 @@ public class ProyectoService implements IProyectoService {
     }
 
     @Override
-    public List<ProyectoDTOResponse> obtenerProyectosDeUsuario(int idUsuario) throws Exception {
+    public Proyecto obtenerProyectoEntidadPorId(int id) throws Exception {
+        Proyecto proyecto = proyectoRepository.findById(id);
+        if(proyecto == null){
+            throw new Exception("El proyecto con id: " +id+ ", no existe");
+        }
+        return proyecto;
+    }
 
-        if (usuarioRepository.findById(idUsuario) == null) {
+    @Override
+    public List<ProyectoDTOResponse> obtenerProyectosDeUsuario(int idUsuario) throws Exception {
+        //traemos el usuario por id
+        Usuario usuario = usuarioRepository.findById(idUsuario);
+
+        if (usuario == null) {
             throw new Exception("El usuario con id " + idUsuario + " No existe");
         }
 
-        List<Proyecto> proyectos = this.convertirObjetosEnProyectos(proyectoRolUsuarioRepository.findProyectosByUsuario(idUsuario));
+        //creamos listado de proyectos
+        List<Proyecto> proyectos = new ArrayList<>();
+
+        //recorremos el listado de ProyectoRolUsuario de ese Usuario
+        for(ProyectoRolUsuario pru : usuario.getProyectoRolUsuarios()){
+            //obtenemos el proyecto
+            if(pru.getProyecto().isActivo()) {
+                proyectos.add(pru.getProyecto());
+            }
+        }
+        //de la anterior forma, podemos obtener todos los proyectos a los que pertenece un usuario
         
         //esta linea convierte el listado de proyectos en dto
         List<ProyectoDTOResponse> dtos = proyectos.stream().map(proyecto -> modelMapper.map(proyecto, ProyectoDTOResponse.class)).collect(Collectors.toList());
@@ -170,4 +196,10 @@ public class ProyectoService implements IProyectoService {
         proyecto.setDescripcion(descripcion);
         proyectoRepository.save(proyecto);
     }
+
+    @Override
+    public boolean agregarUsuarioAProyectoConRol(ProyectoRolUsuarioDTO dto) throws Exception {
+        return proyectoRolUsuarioService.agregarUsuarioAProyectoConRol(dto);
+    }
+
 }

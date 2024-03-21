@@ -12,11 +12,12 @@ import java.util.List;
 
 public interface ProyectoRolUsuarioRepository extends JpaRepository<ProyectoRolUsuario, Integer> {
 
+    /*YA NO SE USA
     @Query(value = "SELECT p.id_proyecto, p.nombre, p.descripcion, p.activo, p.fecha_inicio, p.fecha_fin " +
             "FROM proyecto_rol_usuario pru " +
             "INNER JOIN proyecto p ON pru.id_proyecto = p.id_proyecto " +
             "WHERE " + "pru.id_usuario = :id_usuario AND p.activo = true", nativeQuery = true)
-    List<Object[]> findProyectosByUsuario(@Param("id_usuario")int idUsuario);
+    List<Object[]> findProyectosByUsuario(@Param("id_usuario")int idUsuario);*/
 
     @Query(value = "SELECT p.id_proyecto, p.nombre, p.descripcion, p.activo, p.fecha_inicio, p.fecha_fin " +
             "FROM proyecto_rol_usuario pru " +
@@ -34,5 +35,10 @@ public interface ProyectoRolUsuarioRepository extends JpaRepository<ProyectoRolU
             @Param("idUsuario") int idUsuario,
             @Param("fechaInicio") LocalDate fechaInicio,
             @Param("fechaFin") LocalDate fechaFin);
+
+    @Query(value = "SELECT * FROM proyecto_rol_usuario pru WHERE" +
+            "pru.id_usuario = :idUsuario AND" +
+            "pru.id_proyecto = :idProyecto", nativeQuery = true)
+    ProyectoRolUsuario findByUsuarioAndProyecto (@Param("idUsuario") int idUsuario, @Param("idProyecto") int idProyecto);
 
 }

@@ -3,6 +3,7 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service("usuarioService")
@@ -58,7 +60,18 @@ public class UsuarioService implements IUsuarioService {
             return modelMapper.map(usuarioExistente, UsuarioDTOResponse.class);
         }
 
-        @Override
+    @Override
+    public Usuario obtenerUsuarioEntidadPorId(int id) throws Exception {
+        Usuario usuario = usuarioRepository.findById(id);
+
+        if(usuario == null){
+            throw new Exception("El usuario con id: "+id+", no existe en la bd");
+        }
+
+        return usuario;
+    }
+
+    @Override
         public UsuarioDTOResponse traerUsuario (String usuario)throws Exception {
             Usuario existente = usuarioRepository.findByUsuario(usuario);
 
@@ -87,13 +100,18 @@ public class UsuarioService implements IUsuarioService {
             return listaUsuarioDto;
         }
 
+
+    //se recibe el id del proyecto para que la query pueda obtener todos los usuarios que no pertenezcan a ese proyecto
     @Override
-    public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombre) throws Exception {
+    public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombre, int idProyecto) throws Exception {
         List<Usuario> listaUsuarios = usuarioRepository.findAllByUsuario(nombre);
         List<UsuarioDTOResponse> listaUsuarioDto = new ArrayList<>();
 
+
         if(!listaUsuarios.isEmpty()){
-            listaUsuarioDto = listaUsuarios.stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
+            for(Usuario usuario : listaUsuarios){
+                listaUsuarioDto.add(modelMapper.map(usuario, UsuarioDTOResponse.class));
+            }
         }
 
         return listaUsuarioDto;

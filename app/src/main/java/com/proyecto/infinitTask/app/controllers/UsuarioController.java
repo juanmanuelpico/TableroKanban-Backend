@@ -74,10 +74,10 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/traerUsuariosPorNombreUsuario/{nombre}")
-    public ResponseEntity<Object> obtenerUsuariosPorNombreUsuario(@PathVariable String nombre){
+    @GetMapping("/traerUsuariosPorNombreUsuario/{nombre}/{idProyecto}")
+    public ResponseEntity<Object> obtenerUsuariosPorNombreUsuario(@PathVariable String nombre, @PathVariable int idProyecto){
         try{
-            List<UsuarioDTOResponse> listaDto = usuarioService.obtenerUsuariosPorNombre(nombre);
+            List<UsuarioDTOResponse> listaDto = usuarioService.obtenerUsuariosPorNombre(nombre, idProyecto);
             return ResponseEntity.status(HttpStatus.OK).body(listaDto);
         } catch (Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
