@@ -123,10 +123,12 @@ public class ProyectoController {
 
     @PostMapping("/agregarUsuarioAProyecto")
     public ResponseEntity<Object> agregarUsuarioAProyectoConRol(@RequestBody ProyectoRolUsuarioDTO dto){
+        System.out.println(dto);
         try {
             proyectoService.agregarUsuarioAProyectoConRol(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario agregado exitosamente"));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
     }

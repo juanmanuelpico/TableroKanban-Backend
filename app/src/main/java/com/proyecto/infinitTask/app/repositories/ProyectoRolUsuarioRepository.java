@@ -25,9 +25,4 @@ public interface ProyectoRolUsuarioRepository extends JpaRepository<ProyectoRolU
             @Param("fechaInicio") LocalDate fechaInicio,
             @Param("fechaFin") LocalDate fechaFin);
 
-    @Query(value = "SELECT * FROM proyecto_rol_usuario pru WHERE" +
-            "pru.id_usuario = :idUsuario AND" +
-            "pru.id_proyecto = :idProyecto", nativeQuery = true)
-    ProyectoRolUsuario findByUsuarioAndProyecto (@Param("idUsuario") int idUsuario, @Param("idProyecto") int idProyecto);
-
 }

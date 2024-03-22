@@ -42,9 +42,6 @@ public class ProyectoRolUsuarioService implements IProyectoRolUsuarioService {
     //Se crea un nuevo registro en la tabla
     public boolean agregarUsuarioAProyectoConRol(ProyectoRolUsuarioDTO dto) throws Exception{
 
-        if(proyectoRolUsuarioRepository.findByUsuarioAndProyecto(dto.getIdUsuario(), dto.getIdProyecto()) !=null){
-            throw new Exception("ERROR: Ya existe el usuario en el proyecto");
-        }
 
         Usuario usuario = usuarioService.obtenerUsuarioEntidadPorId(dto.getIdUsuario());
         Proyecto proyecto = proyectoService.obtenerProyectoEntidadPorId(dto.getIdProyecto());
