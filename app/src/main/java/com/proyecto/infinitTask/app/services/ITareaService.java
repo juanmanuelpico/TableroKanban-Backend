@@ -1,6 +1,7 @@
 package com.proyecto.infinitTask.app.services;
 
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
+import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaEstadoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ITareaService {
     public void bajaLogicaTarea(int id) throws Exception;
 
     public void editarTarea (TareaDTORequest dto) throws Exception;
+
+    public void cambiarEstado (TareaEstadoDTORequest dto) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.proyecto.infinitTask.app.controllers;
 
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
+import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaEstadoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
 import com.proyecto.infinitTask.app.services.ITareaService;
 import com.proyecto.infinitTask.app.util.Mensaje;
@@ -81,6 +82,16 @@ public class TareaController {
         try {
             tareaService.editarTarea(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Tarea editada exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/cambiarEstado")
+    public  ResponseEntity<Object> cambiarEstadoTarea (@RequestBody TareaEstadoDTORequest dto) {
+        try {
+            tareaService.cambiarEstado(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Cambio de estado realizado"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }

@@ -1,6 +1,7 @@
 package com.proyecto.infinitTask.app.services.implementations;
 
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
+import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaEstadoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.Tarea;
@@ -101,6 +102,13 @@ public class TareaService implements ITareaService {
         tarea.setEstado(dto.getEstado());
         tarea.setDificultad(dto.getDificultad());
 
+        tareaRepository.save(tarea);
+    }
+
+    @Override
+    public void cambiarEstado(TareaEstadoDTORequest dto) throws Exception {
+        Tarea tarea = tareaRepository.findById(dto.getIdTarea());
+        tarea.setEstado(dto.getEstado());
         tareaRepository.save(tarea);
     }
 }
