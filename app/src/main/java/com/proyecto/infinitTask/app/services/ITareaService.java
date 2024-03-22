@@ -9,9 +9,13 @@ public interface ITareaService {
 
     public boolean crearTarea(TareaDTORequest dto) throws Exception;
 
+    public TareaDTOResponse traerTareaPorId(int idTarea) throws Exception;
+
     public List<TareaDTOResponse>traerTareas(int idProyecto) throws Exception;
 
     public List<TareaDTOResponse>buscarTareasIdNombre(int idProyecto, String nombre)throws Exception;
 
-    void bajaLogicaTarea(int id) throws Exception;
+    public void bajaLogicaTarea(int id) throws Exception;
+
+    public void editarTarea (TareaDTORequest dto) throws Exception;
 }

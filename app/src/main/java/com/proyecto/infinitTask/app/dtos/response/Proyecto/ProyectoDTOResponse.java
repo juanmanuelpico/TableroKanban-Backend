@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ProyectoDTOResponse {
+
     private int id;
 
     private String nombre;

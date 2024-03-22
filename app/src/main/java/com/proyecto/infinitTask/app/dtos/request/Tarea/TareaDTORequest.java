@@ -19,6 +19,8 @@ public class TareaDTORequest {
 
     private int idProyecto;
 
+    private int idTarea;
+
     private String titulo;
 
     private String descripcion;
@@ -35,7 +37,7 @@ public class TareaDTORequest {
 
     private String estado;
 
-    private  int dificultad;
+    private String dificultad;
 
     private Set<Usuario> usuarios;
 

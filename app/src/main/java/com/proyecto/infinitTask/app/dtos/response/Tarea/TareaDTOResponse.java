@@ -23,7 +23,7 @@ public class TareaDTOResponse {
 
     private String descripcion;
 
-    private int dificultad;
+    private String dificultad;
 
     private String estado;
 

@@ -35,7 +35,7 @@ public class TareaService implements ITareaService {
         tarea.setTitulo(dto.getTitulo());
         tarea.setActivo(true);
         tarea.setDescripcion(dto.getDescripcion());
-        tarea.setDificultad(1);
+        tarea.setDificultad("Baja");
         tarea.setEstado("PARA HACER");
         tarea.setFechaCreacion(LocalDate.now());
         tarea.setFechaInicio(LocalDate.now());
@@ -44,6 +44,15 @@ public class TareaService implements ITareaService {
         tareaRepository.save(tarea);
 
         return true;
+    }
+
+    @Override
+    public TareaDTOResponse traerTareaPorId(int idTarea) throws Exception {
+        Tarea tarea = tareaRepository.findById(idTarea);
+        if(tarea == null) {
+            throw  new Exception("No se encontro la tarea con id: "+idTarea+".");
+        }
+        return modelMapper.map(tarea, TareaDTOResponse.class);
     }
 
     public List<TareaDTOResponse> traerTareas(int idProyecto) throws Exception {
@@ -77,6 +86,21 @@ public class TareaService implements ITareaService {
         }
         tarea.setActivo(!tarea.isActivo());
         tarea.setFechaFin(LocalDate.now());
+        tareaRepository.save(tarea);
+    }
+
+    @Override
+    public void editarTarea(TareaDTORequest dto) throws Exception {
+        Tarea tarea = tareaRepository.findById(dto.getIdTarea());
+        if(tarea == null){
+            throw new Exception("No se encontro la tarea con id: "+dto.getIdTarea()+".");
+        }
+        tarea.setTitulo(dto.getTitulo());
+        tarea.setDescripcion(dto.getDescripcion());
+        tarea.setFechaActualizacion(LocalDate.now());
+        tarea.setEstado(dto.getEstado());
+        tarea.setDificultad(dto.getDificultad());
+
         tareaRepository.save(tarea);
     }
 }

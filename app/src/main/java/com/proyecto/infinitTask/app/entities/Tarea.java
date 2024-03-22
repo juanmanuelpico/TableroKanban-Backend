@@ -47,7 +47,7 @@ public class Tarea {
     private String estado;
 
     @Column(name="dificultad")
-    private int dificultad; // dificultad de 1 a 10
+    private String dificultad; // baja media alta
 
     @ManyToMany(mappedBy = "tareas")
     private Set<Usuario> usuarios = new HashSet<>();
