@@ -148,4 +148,13 @@ public class UsuarioService implements IUsuarioService {
 
         usuarioRepository.save(usuario);
     }
+
+    @Override
+    public List<UsuarioDTOResponse> obtenerUsuariosDeProyecto(int idProyecto) throws Exception {
+        if(proyectoService.obtenerProyectoEntidadPorId(idProyecto) == null){
+            throw new Exception("El proyecto con id: "+idProyecto+", no existe");
+        }
+       return usuarioRepository.findUsuariosByProyecto(idProyecto).stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
+    }
+
 }

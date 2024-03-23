@@ -1,5 +1,6 @@
 package com.proyecto.infinitTask.app.repositories;
 
+import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value = "SELECT * FROM usuario u WHERE BINARY u.usuario = :usuario AND u.password = :password", nativeQuery = true)
     Usuario findByUsuarioAndPasswordCaseSensitive(@Param("usuario") String usuario, @Param("password") String password);
 
+    @Query(value = "SELECT u.* FROM usuario u " +
+            "INNER JOIN proyecto_rol_usuario pru ON u.id_usuario = pru.id_usuario " +
+            "WHERE pru.id_proyecto = :id_proyecto AND u.activo = true", nativeQuery = true)
+    List<Usuario> findUsuariosByProyecto(@Param("id_proyecto") int idProyecto);
 }
