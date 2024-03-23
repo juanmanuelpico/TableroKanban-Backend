@@ -93,4 +93,14 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
     }
+
+    @GetMapping("/traerUsuariosPorIdProyecto/{idProyecto}")
+    public ResponseEntity<Object> obtenerUsuariosPorIdProyecto(@PathVariable int idProyecto){
+        try{
+            List<UsuarioDTOResponse> listaDto = usuarioService.obtenerUsuariosDeProyecto(idProyecto);
+            return ResponseEntity.status(HttpStatus.OK).body(listaDto);
+        } catch (Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -25,4 +25,6 @@ public interface IUsuarioService {
 
     public void editarUsuario(UsuarioDTORequest dto)throws Exception;
 
+    public List<UsuarioDTOResponse> obtenerUsuariosDeProyecto (int idProyecto) throws Exception;
+
 }
