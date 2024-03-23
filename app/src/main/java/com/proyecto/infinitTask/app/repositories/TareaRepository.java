@@ -19,7 +19,7 @@ public interface TareaRepository extends JpaRepository<Tarea, Integer> {
     @Query(value = "SELECT * FROM tarea t  WHERE t.id_proyecto = :id AND t.activo = true", nativeQuery = true)
     List<Tarea> findByIdProyectoAndActive(@Param("id") int id);
 
-    @Query(value = "SELECT * FROM tarea t  WHERE t.id_proyecto = :id AND t.nombre LIKE %:nombre_tarea% AND t.active = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM tarea t  WHERE t.id_proyecto = :id AND t.nombre LIKE %:nombre_tarea% AND t.activo = true", nativeQuery = true)
     List<Tarea> findByIdProyectoNombreTarea(@Param("id") int id, @Param("nombre_tarea") String nombreTarea);
 }
 
