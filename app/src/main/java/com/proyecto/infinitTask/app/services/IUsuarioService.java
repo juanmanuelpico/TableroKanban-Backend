@@ -26,5 +26,7 @@ public interface IUsuarioService {
     public void editarUsuario(UsuarioDTORequest dto)throws Exception;
 
     public List<UsuarioDTOResponse> obtenerUsuariosDeProyecto (int idProyecto) throws Exception;
+    //Obtiene todos los usuarios por terminación en el nombre de usuario, de un proyecto que no pertenezcan a esa tarea
+    public List<UsuarioDTOResponse> obtenerUsuariosPorTermDeProyectoNoTarea (String usuario, int idProyecto, int idTarea) throws Exception;
 
 }

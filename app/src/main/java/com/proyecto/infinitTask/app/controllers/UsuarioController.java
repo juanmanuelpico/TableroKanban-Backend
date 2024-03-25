@@ -103,4 +103,16 @@ public class UsuarioController {
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
         }
     }
+
+    //trae todos los usuarios del proyecto que no esten asignada a esa tarea
+    @GetMapping("/traerUsuariosDeProyectoSinTarea/{nombreUsuario}/{idProyecto}/{idTarea}")
+    public ResponseEntity<Object> obtenerUsuarios(@PathVariable String nombreUsuario, @PathVariable int idProyecto, @PathVariable int idTarea){
+        try{
+            List<UsuarioDTOResponse> listaDto = usuarioService.obtenerUsuariosPorTermDeProyectoNoTarea(nombreUsuario, idProyecto, idTarea);
+            return ResponseEntity.status(HttpStatus.OK).body(listaDto);
+        } catch (Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

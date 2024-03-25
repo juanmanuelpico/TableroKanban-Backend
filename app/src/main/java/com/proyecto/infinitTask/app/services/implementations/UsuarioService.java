@@ -3,10 +3,13 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
+import com.proyecto.infinitTask.app.entities.Tarea;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IProyectoService;
+import com.proyecto.infinitTask.app.services.ITareaService;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,9 @@ public class UsuarioService implements IUsuarioService {
 
     @Autowired
     private IProyectoService proyectoService;
+
+    @Autowired
+    private ITareaService tareaService;
 
     @Override
     public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
@@ -155,6 +161,16 @@ public class UsuarioService implements IUsuarioService {
             throw new Exception("El proyecto con id: "+idProyecto+", no existe");
         }
        return usuarioRepository.findUsuariosByProyecto(idProyecto).stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UsuarioDTOResponse> obtenerUsuariosPorTermDeProyectoNoTarea(String usuarioNombre, int idProyecto, int idTarea) throws Exception {
+        //Se traen las entidades proyecto y tarea ya que las excepciones correspondientes se encuentran en su respectivo service
+        //por lo tanto, en caso de haber algun error al traer la entidades, se corta la ejecucion del metodo
+        Proyecto proyecto = proyectoService.obtenerProyectoEntidadPorId(idProyecto);
+        Tarea tarea = tareaService.traerTareaEntidadPorId(idTarea);
+
+        return usuarioRepository.findUsuariosByProyectoNotInTarea(usuarioNombre, idProyecto, idTarea).stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
     }
 
 }

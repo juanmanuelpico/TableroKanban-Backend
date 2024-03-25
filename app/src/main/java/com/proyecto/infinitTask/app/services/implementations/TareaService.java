@@ -56,6 +56,15 @@ public class TareaService implements ITareaService {
         return modelMapper.map(tarea, TareaDTOResponse.class);
     }
 
+    @Override
+    public Tarea traerTareaEntidadPorId(int idTarea) throws Exception {
+       Tarea tarea = tareaRepository.findById(idTarea);
+       if(tarea == null){
+           throw new Exception("No existe la tarea con id: "+idTarea);
+       }
+       return tarea;
+    }
+
     public List<TareaDTOResponse> traerTareas(int idProyecto) throws Exception {
 
         List<TareaDTOResponse> tareasDto = new ArrayList<>();
