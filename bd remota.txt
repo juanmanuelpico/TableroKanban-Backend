@@ -1,7 +1,7 @@
 Nuevos datos para cargar en Mysql: 
 
 Hotsname: viaduct.proxy.rlwy.net
-Port: 47477
+Port: 30508
 Username: root
-Password: 561be4eBA36da--abAaCEGFc11b3cF4C
+Password: zYyInGaWidQiKOYonPtmZViiBsYRvfso
 Default Schema: railway
