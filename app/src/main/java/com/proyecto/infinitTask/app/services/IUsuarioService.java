@@ -29,5 +29,5 @@ public interface IUsuarioService {
     //Obtiene todos los usuarios por terminación en el nombre de usuario, de un proyecto que no pertenezcan a esa tarea
     public List<UsuarioDTOResponse> obtenerUsuariosPorTermDeProyectoNoTarea (String usuario, int idProyecto, int idTarea) throws Exception;
 
-    public boolean asignarUsuarioATarea(int idTarea, int idUsuario) throws Exception;
+    public void asignarUsuarioATarea(int idTarea, int idUsuario) throws Exception;
 }

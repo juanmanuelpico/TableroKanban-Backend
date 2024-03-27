@@ -177,13 +177,11 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public boolean asignarUsuarioATarea(int idTarea, int idUsuario) throws Exception {
-        boolean retorno = false;
+    public void asignarUsuarioATarea(int idTarea, int idUsuario) throws Exception {
         Usuario usuario = obtenerUsuarioEntidadPorId(idUsuario);
         Tarea tarea = tareaService.traerTareaEntidadPorId(idTarea);
-        retorno = usuario.getTareas().add(tarea);
+        usuario.getTareas().add(tarea);
         usuarioRepository.save(usuario);
-        return retorno;
     }
 
 }
