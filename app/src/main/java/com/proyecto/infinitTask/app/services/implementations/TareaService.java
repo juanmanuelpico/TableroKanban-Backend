@@ -108,6 +108,7 @@ public class TareaService implements ITareaService {
         tarea.setTitulo(dto.getTitulo());
         tarea.setDescripcion(dto.getDescripcion());
         tarea.setFechaActualizacion(LocalDate.now());
+        tarea.setFechaFin(LocalDate.from(dto.getFechaFin()));
         tarea.setEstado(dto.getEstado());
         tarea.setDificultad(dto.getDificultad());
 
