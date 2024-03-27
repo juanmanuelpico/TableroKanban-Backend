@@ -13,6 +13,7 @@ import com.proyecto.infinitTask.app.services.ITareaService;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class UsuarioService implements IUsuarioService {
     private IProyectoService proyectoService;
 
     @Autowired
+    @Lazy
     private ITareaService tareaService;
 
     @Override
@@ -167,10 +169,21 @@ public class UsuarioService implements IUsuarioService {
     public List<UsuarioDTOResponse> obtenerUsuariosPorTermDeProyectoNoTarea(String usuarioNombre, int idProyecto, int idTarea) throws Exception {
         //Se traen las entidades proyecto y tarea ya que las excepciones correspondientes se encuentran en su respectivo service
         //por lo tanto, en caso de haber algun error al traer la entidades, se corta la ejecucion del metodo
-        Proyecto proyecto = proyectoService.obtenerProyectoEntidadPorId(idProyecto);
-        Tarea tarea = tareaService.traerTareaEntidadPorId(idTarea);
+        List<UsuarioDTOResponse> dtos = new ArrayList<>();
+        if(proyectoService.obtenerProyectoEntidadPorId(idProyecto) != null && tareaService.traerTareaEntidadPorId(idTarea) != null){
+            dtos = usuarioRepository.findUsuariosByProyectoNotInTarea(usuarioNombre, idProyecto, idTarea).stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
+        }
+        return dtos;
+    }
 
-        return usuarioRepository.findUsuariosByProyectoNotInTarea(usuarioNombre, idProyecto, idTarea).stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList());
+    @Override
+    public boolean asignarUsuarioATarea(int idTarea, int idUsuario) throws Exception {
+        boolean retorno = false;
+        Usuario usuario = obtenerUsuarioEntidadPorId(idUsuario);
+        Tarea tarea = tareaService.traerTareaEntidadPorId(idTarea);
+        retorno = usuario.getTareas().add(tarea);
+        usuarioRepository.save(usuario);
+        return retorno;
     }
 
 }

@@ -115,4 +115,14 @@ public class UsuarioController {
         }
     }
 
+    @PutMapping("/asignarUsuarioATarea/{idTarea}/{idUsuario}")
+    public  ResponseEntity<Object> asignarUsuarioATarea (@PathVariable int idTarea, @PathVariable int idUsuario) {
+        try {
+            usuarioService.asignarUsuarioATarea(idTarea, idUsuario);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario con id: "+idUsuario+" asignado a la tarea con id: "+idTarea +" correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
+
 }

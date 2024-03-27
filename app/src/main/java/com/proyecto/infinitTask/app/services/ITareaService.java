@@ -24,4 +24,5 @@ public interface ITareaService {
     public void editarTarea (TareaDTORequest dto) throws Exception;
 
     public void cambiarEstado (TareaEstadoDTORequest dto) throws Exception;
+
 }

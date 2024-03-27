@@ -5,9 +5,11 @@ import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaEstadoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.Tarea;
+import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.TareaRepository;
 import com.proyecto.infinitTask.app.services.ITareaService;
+import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,9 @@ public class TareaService implements ITareaService {
 
     @Autowired
     private ProyectoRepository proyectoRepository;
+
+    @Autowired
+    private IUsuarioService usuarioService;
 
     @Override
     public boolean crearTarea(TareaDTORequest dto) throws Exception { //FALTA VALIDAR
@@ -121,4 +126,5 @@ public class TareaService implements ITareaService {
         tarea.setEstado(dto.getEstado());
         tareaRepository.save(tarea);
     }
+
 }
