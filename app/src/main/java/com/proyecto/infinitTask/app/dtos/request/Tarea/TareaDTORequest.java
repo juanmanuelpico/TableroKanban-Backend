@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -27,13 +27,13 @@ public class TareaDTORequest {
 
     private boolean activo;
 
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
-    private LocalDateTime fechaInicio;
+    private LocalDate fechaInicio;
 
-    private LocalDateTime fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
-    private LocalDateTime fechaFin;
+    private LocalDate fechaFin;
 
     private String estado;
 
