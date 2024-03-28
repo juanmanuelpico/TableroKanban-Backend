@@ -1,12 +1,14 @@
 package com.proyecto.infinitTask.app.dtos.response.Tarea;
 
 
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,5 +32,9 @@ public class TareaDTOResponse {
     private LocalDate fechaInicio;
 
     private LocalDate fechaFin;
+
+    private List<UsuarioDTOResponse> usuarios;
+
+    private int cantUsuarios;
 
 }

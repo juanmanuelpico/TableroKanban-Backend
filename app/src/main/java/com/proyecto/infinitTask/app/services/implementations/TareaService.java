@@ -3,6 +3,7 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaEstadoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.Tarea;
 import com.proyecto.infinitTask.app.entities.Usuario;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("tareaService")
 public class TareaService implements ITareaService {
@@ -58,7 +60,9 @@ public class TareaService implements ITareaService {
         if(tarea == null) {
             throw  new Exception("No se encontro la tarea con id: "+idTarea+".");
         }
-        return modelMapper.map(tarea, TareaDTOResponse.class);
+        TareaDTOResponse tareaDTO = modelMapper.map(tarea, TareaDTOResponse.class);
+        tareaDTO.setUsuarios(tarea.getUsuarios().stream().map(usuario -> modelMapper.map(usuario, UsuarioDTOResponse.class)).collect(Collectors.toList()));
+        return tareaDTO;
     }
 
     @Override
@@ -76,7 +80,9 @@ public class TareaService implements ITareaService {
         List<Tarea> tareas = tareaRepository.findByIdProyectoAndActive(idProyecto);
 
         for (Tarea t : tareas) {
-            tareasDto.add(modelMapper.map(t, TareaDTOResponse.class));
+            TareaDTOResponse dto = modelMapper.map(t, TareaDTOResponse.class);
+            dto.setCantUsuarios(tareaRepository.countUsuariosByTareaId(t.getId()));
+            tareasDto.add(dto);
         }
         return tareasDto;
 
@@ -126,5 +132,6 @@ public class TareaService implements ITareaService {
         tarea.setEstado(dto.getEstado());
         tareaRepository.save(tarea);
     }
+
 
 }
