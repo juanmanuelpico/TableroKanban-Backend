@@ -123,7 +123,6 @@ public class ProyectoController {
 
     @PostMapping("/agregarUsuarioAProyecto")
     public ResponseEntity<Object> agregarUsuarioAProyectoConRol(@RequestBody ProyectoRolUsuarioDTO dto){
-        System.out.println(dto);
         try {
             proyectoService.agregarUsuarioAProyectoConRol(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario agregado exitosamente"));
@@ -132,4 +131,16 @@ public class ProyectoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }
     }
+
+    @DeleteMapping("/eliminarUsuarioDeProyecto/{idUsuario}/{idProyecto}")
+    public ResponseEntity<Object> eliminarUsuarioDeProyecto(@PathVariable int idUsuario, @PathVariable int idProyecto){
+        try {
+            proyectoService.eliminarUsuarioDeProyectoYdeTareas(idUsuario, idProyecto);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario eliminado exitosamente"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
+
 }

@@ -1,8 +1,6 @@
 package com.proyecto.infinitTask.app.repositories;
 
-import com.proyecto.infinitTask.app.entities.Proyecto;
 import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
-import com.proyecto.infinitTask.app.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +23,8 @@ public interface ProyectoRolUsuarioRepository extends JpaRepository<ProyectoRolU
             @Param("fechaInicio") LocalDate fechaInicio,
             @Param("fechaFin") LocalDate fechaFin);
 
+    @Query(value = "SELECT * FROM proyecto_rol_usuario pru " +
+            "WHERE pru.id_usuario = :id_usuario " +
+            "AND pru.id_proyecto = :id_proyecto", nativeQuery = true)
+    ProyectoRolUsuario findProyectoRolUsuarioByIdUsuarioAndIdProyecto (@Param("id_usuario") int idUsuario, @Param("id_proyecto") int idProyecto);
 }

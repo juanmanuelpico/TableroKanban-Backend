@@ -30,4 +30,8 @@ public interface IUsuarioService {
     public List<UsuarioDTOResponse> obtenerUsuariosPorTermDeProyectoNoTarea (String usuario, int idProyecto, int idTarea) throws Exception;
 
     public void asignarUsuarioATarea(int idTarea, int idUsuario) throws Exception;
+
+    void desasignarUsuarioATarea(int idTarea, int idUsuario) throws Exception;
+
+    void desasignarTareasDeUsuarioEnProyecto(int idUsuario, int idProyecto) throws Exception;
 }

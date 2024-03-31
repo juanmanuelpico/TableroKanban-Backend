@@ -24,4 +24,6 @@ public interface IProyectoService {
     public void editarNombreDescripcionProyecto(int id, String nombre, String descripcion) throws Exception;
 
     public boolean agregarUsuarioAProyectoConRol(ProyectoRolUsuarioDTO dto) throws Exception;
+
+    void eliminarUsuarioDeProyectoYdeTareas(int idUsuario, int idProyecto) throws Exception;
 }

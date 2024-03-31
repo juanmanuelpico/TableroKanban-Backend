@@ -42,7 +42,6 @@ public class ProyectoRolUsuarioService implements IProyectoRolUsuarioService {
     //Se crea un nuevo registro en la tabla
     public boolean agregarUsuarioAProyectoConRol(ProyectoRolUsuarioDTO dto) throws Exception{
 
-
         Usuario usuario = usuarioService.obtenerUsuarioEntidadPorId(dto.getIdUsuario());
         Proyecto proyecto = proyectoService.obtenerProyectoEntidadPorId(dto.getIdProyecto());
         RolUsuario rolUsuario = rolUsuarioService.obtenerRolEntidadPorId(dto.getIdRolUsuario());
@@ -56,5 +55,13 @@ public class ProyectoRolUsuarioService implements IProyectoRolUsuarioService {
         proyectoRolUsuarioRepository.save(proyectoRolUsuario);
 
         return true;
+    }
+
+    public void eliminarProyectoRolUsuario(int idUsuario, int idProyecto) throws Exception{
+        ProyectoRolUsuario pru = proyectoRolUsuarioRepository.findProyectoRolUsuarioByIdUsuarioAndIdProyecto(idUsuario, idProyecto);
+        if(pru == null) {
+            throw new Exception("Registro pru inexistente");
+        }
+        proyectoRolUsuarioRepository.delete(pru);
     }
 }

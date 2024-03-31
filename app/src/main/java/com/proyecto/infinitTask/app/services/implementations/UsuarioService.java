@@ -3,8 +3,6 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
-import com.proyecto.infinitTask.app.entities.Proyecto;
-import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
 import com.proyecto.infinitTask.app.entities.Tarea;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service("usuarioService")
@@ -186,4 +183,22 @@ public class UsuarioService implements IUsuarioService {
         usuarioRepository.save(usuario);
     }
 
+    @Override
+    public void desasignarUsuarioATarea(int idTarea, int idUsuario) throws Exception {
+        Usuario usuario = obtenerUsuarioEntidadPorId(idUsuario);
+        Tarea tarea = tareaService.traerTareaEntidadPorId(idTarea);
+        usuario.getTareas().remove(tarea);
+        usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void desasignarTareasDeUsuarioEnProyecto(int idUsuario, int idProyecto) throws Exception {
+        Usuario usuario = obtenerUsuarioEntidadPorId(idUsuario);
+        for( Tarea t : usuario.getTareas()){
+            if( t.getProyecto().getId() == idProyecto ) {
+                System.out.println(usuario.getTareas().remove(t));
+            }
+        }
+        usuarioRepository.save(usuario);
+    }
 }

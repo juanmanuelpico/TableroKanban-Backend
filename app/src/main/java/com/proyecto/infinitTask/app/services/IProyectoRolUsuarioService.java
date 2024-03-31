@@ -10,4 +10,6 @@ public interface IProyectoRolUsuarioService {
     public boolean crearProyectoRolUsuario(Proyecto proyecto, Usuario usuario, RolUsuario rolUsuario);
 
     public boolean agregarUsuarioAProyectoConRol(ProyectoRolUsuarioDTO dto) throws Exception;
+
+    public void eliminarProyectoRolUsuario (int idUsuario, int idProyecto) throws Exception;
 }

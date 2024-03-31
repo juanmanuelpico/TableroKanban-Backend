@@ -4,14 +4,13 @@ import com.proyecto.infinitTask.app.dtos.request.Proyecto.ProyectoDTORequest;
 import com.proyecto.infinitTask.app.dtos.request.ProyectoRolUsuario.ProyectoRolUsuarioDTO;
 import com.proyecto.infinitTask.app.dtos.response.Proyecto.ProyectoDTOResponse;
 import com.proyecto.infinitTask.app.entities.Proyecto;
-import com.proyecto.infinitTask.app.entities.ProyectoRolUsuario;
-import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.ProyectoRepository;
 import com.proyecto.infinitTask.app.repositories.ProyectoRolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.RolUsuarioRepository;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
 import com.proyecto.infinitTask.app.services.IProyectoRolUsuarioService;
 import com.proyecto.infinitTask.app.services.IProyectoService;
+import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -46,6 +45,10 @@ public class ProyectoService implements IProyectoService {
 
     @Autowired
     private RolUsuarioRepository rolUsuarioRepository;
+
+    @Autowired
+    @Lazy
+    private IUsuarioService usuarioService;
 
     @Override
     public boolean crearProyecto(ProyectoDTORequest dtoProyecto) {
@@ -184,6 +187,12 @@ public class ProyectoService implements IProyectoService {
     @Override
     public boolean agregarUsuarioAProyectoConRol(ProyectoRolUsuarioDTO dto) throws Exception {
         return proyectoRolUsuarioService.agregarUsuarioAProyectoConRol(dto);
+    }
+
+    @Override
+    public void eliminarUsuarioDeProyectoYdeTareas(int idUsuario, int idProyecto) throws Exception{
+        //proyectoRolUsuarioService.eliminarProyectoRolUsuario(idUsuario, idProyecto);
+        usuarioService.desasignarTareasDeUsuarioEnProyecto(idUsuario, idProyecto);
     }
 
 }
