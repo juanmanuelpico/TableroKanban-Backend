@@ -39,6 +39,10 @@ public class UsuarioService implements IUsuarioService {
     @Lazy
     private ITareaService tareaService;
 
+    @Autowired
+    @Lazy
+    private IUsuarioService usuarioService;
+
     @Override
     public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
 
@@ -193,12 +197,16 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public void desasignarTareasDeUsuarioEnProyecto(int idUsuario, int idProyecto) throws Exception {
-        Usuario usuario = obtenerUsuarioEntidadPorId(idUsuario);
-        for( Tarea t : usuario.getTareas()){
-            if( t.getProyecto().getId() == idProyecto ) {
-                System.out.println(usuario.getTareas().remove(t));
-            }
-        }
-        usuarioRepository.save(usuario);
+       List<Tarea> tareas = tareaService.obtenerTareasDeUsuarioEnProyecto(idUsuario,idProyecto);
+       if(!tareas.isEmpty()) {
+           Usuario usuario = usuarioService.obtenerUsuarioEntidadPorId(idUsuario);
+           for (Tarea t : tareas) {
+
+               System.out.println(usuario.getTareas().remove(t));
+
+           }
+           usuarioRepository.save(usuario);
+       }
+
     }
 }

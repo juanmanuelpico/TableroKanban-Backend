@@ -125,4 +125,14 @@ public class UsuarioController {
         }
     }
 
+    @DeleteMapping("/eliminarUsuarioDeTarea/{idTarea}/{idUsuario}")
+    public  ResponseEntity<Object> eliminarUsuarioDeTarea (@PathVariable int idTarea, @PathVariable int idUsuario) {
+        try {
+            usuarioService.desasignarUsuarioATarea(idTarea, idUsuario);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario con id: "+idUsuario+" eliminado de la tarea con id: "+idTarea +" correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
+        }
+    }
+
 }

@@ -25,4 +25,6 @@ public interface ITareaService {
 
     public void cambiarEstado (TareaEstadoDTORequest dto) throws Exception;
 
+    public List<Tarea> obtenerTareasDeUsuarioEnProyecto(int idUsuario, int idProyecto) throws Exception;
+
 }

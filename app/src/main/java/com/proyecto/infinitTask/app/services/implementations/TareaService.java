@@ -133,5 +133,10 @@ public class TareaService implements ITareaService {
         tareaRepository.save(tarea);
     }
 
+    @Override
+    public List<Tarea> obtenerTareasDeUsuarioEnProyecto(int idUsuario, int idProyecto) throws Exception {
+        return tareaRepository.findTareasByIdProyectoAndIdUsuario(idUsuario, idProyecto);
+    }
+
 
 }

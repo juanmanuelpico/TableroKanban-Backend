@@ -24,5 +24,9 @@ public interface TareaRepository extends JpaRepository<Tarea, Integer> {
 
     @Query(value = "SELECT COUNT(ut.id_usuario) FROM usuario_tiene_tarea ut WHERE ut.id_tarea = :id_tarea", nativeQuery = true)
     int countUsuariosByTareaId(@Param("id_tarea") int idTarea);
+
+    @Query(value="SELECT t.* FROM tarea t INNER JOIN usuario_tiene_tarea utt ON t.id_tarea = utt.id_tarea WHERE " +
+            "t.id_proyecto = :idProyecto AND t.activo = true AND utt.id_usuario = :idUsuario ", nativeQuery = true)
+    List<Tarea> findTareasByIdProyectoAndIdUsuario(@Param("idUsuario") int idUsuario, @Param("idProyecto") int idProyecto);
 }
 

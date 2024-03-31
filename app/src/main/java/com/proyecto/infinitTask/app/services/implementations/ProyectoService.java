@@ -191,7 +191,7 @@ public class ProyectoService implements IProyectoService {
 
     @Override
     public void eliminarUsuarioDeProyectoYdeTareas(int idUsuario, int idProyecto) throws Exception{
-        //proyectoRolUsuarioService.eliminarProyectoRolUsuario(idUsuario, idProyecto);
+        proyectoRolUsuarioService.eliminarProyectoRolUsuario(idUsuario, idProyecto);
         usuarioService.desasignarTareasDeUsuarioEnProyecto(idUsuario, idProyecto);
     }
 
