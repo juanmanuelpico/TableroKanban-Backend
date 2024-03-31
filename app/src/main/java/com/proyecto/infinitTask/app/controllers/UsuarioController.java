@@ -87,8 +87,8 @@ public class UsuarioController {
     @PutMapping("/editarUsuario")
     public ResponseEntity<Object>editarUsuario(@RequestBody UsuarioDTORequest dto){
         try{
-            usuarioService.editarUsuario(dto);
-            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Usuario cambiado perfectamente"));
+            UsuarioDTOResponse usuarioActualizado = usuarioService.editarUsuario(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioActualizado);
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Mensaje(e.getMessage()));
         }

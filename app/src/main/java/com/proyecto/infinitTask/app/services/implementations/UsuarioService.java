@@ -142,7 +142,7 @@ public class UsuarioService implements IUsuarioService {
         }
 
     @Override
-    public void editarUsuario(UsuarioDTORequest dto) throws Exception {
+    public UsuarioDTOResponse editarUsuario(UsuarioDTORequest dto) throws Exception {
         Usuario usuario = usuarioRepository.findById(dto.getId());
         if(usuario == null){
             throw new Exception("El usuario: "+ dto.getId() +" no se encontro para editar");
@@ -155,6 +155,8 @@ public class UsuarioService implements IUsuarioService {
         usuario.setUsuario(dto.getUsuario());
 
         usuarioRepository.save(usuario);
+        //se retorna el usuario actualizado
+        return this.traerUsuarioId(dto.getId());
     }
 
     @Override

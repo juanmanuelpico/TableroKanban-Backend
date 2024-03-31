@@ -4,8 +4,6 @@ import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaDTORequest;
 import com.proyecto.infinitTask.app.dtos.request.Tarea.TareaEstadoDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Tarea.TareaDTOResponse;
 import com.proyecto.infinitTask.app.services.ITareaService;
-import com.proyecto.infinitTask.app.services.IUsuarioService;
-import com.proyecto.infinitTask.app.util.CantidadUsuariosEnTarea;
 import com.proyecto.infinitTask.app.util.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
