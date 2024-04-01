@@ -3,6 +3,7 @@ package com.proyecto.infinitTask.app.services;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOWithToken;
 import com.proyecto.infinitTask.app.entities.Usuario;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface IUsuarioService {
 
     public List<UsuarioDTOResponse> obtenerUsuariosPorNombre(String nombre, int idProyecto) throws Exception;
 
-    public UsuarioDTOResponse traerUsuarioLogin(UsuarioDTOLogin dtoLogin)throws Exception;
+    public UsuarioDTOWithToken traerUsuarioLogin(UsuarioDTOLogin dtoLogin)throws Exception;
 
     public UsuarioDTOResponse editarUsuario(UsuarioDTORequest dto)throws Exception;
 

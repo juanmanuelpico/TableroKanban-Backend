@@ -3,6 +3,7 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
+import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOWithToken;
 import com.proyecto.infinitTask.app.entities.Tarea;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
@@ -129,7 +130,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-        public UsuarioDTOResponse traerUsuarioLogin (UsuarioDTOLogin dtoLogin) throws Exception {
+        public UsuarioDTOWithToken traerUsuarioLogin (UsuarioDTOLogin dtoLogin) throws Exception {
             Usuario usuarioEntidad = usuarioRepository.findByUsuario(dtoLogin.getUsuario());
             if (usuarioEntidad == null) {
                 throw new Exception("Usuario y/o contraseña incorrecto");
@@ -139,7 +140,7 @@ public class UsuarioService implements IUsuarioService {
             if (!passwordEncoder.matches(dtoLogin.getPassword(), usuarioEntidad.getPassword())) {
                 throw new Exception("Usuario y/o contraseña incorrecto");
             }
-            return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
+            return modelMapper.map(usuarioEntidad, UsuarioDTOWithToken.class);
         }
 
     @Override
