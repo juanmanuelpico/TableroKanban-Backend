@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.proyecto.infinitTask.app.configuration")
+
 public class AppApplication {
 
 	public static void main(String[] args) {
