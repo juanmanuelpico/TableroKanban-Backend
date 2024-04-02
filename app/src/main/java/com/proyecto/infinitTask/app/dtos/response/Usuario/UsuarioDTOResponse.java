@@ -25,4 +25,6 @@ public class UsuarioDTOResponse {
 
         private LocalDate fechaAlta;
 
+        private String token;
+
 }

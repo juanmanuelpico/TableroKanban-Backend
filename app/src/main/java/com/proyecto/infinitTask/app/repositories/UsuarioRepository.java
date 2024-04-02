@@ -7,12 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Usuario findById(int id);
 
     Usuario findByUsuario(String usuario);
+
+    Optional<Usuario> findOneByUsuario(String usuario);
 
     Usuario findByEmail(String email);
 

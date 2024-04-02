@@ -1,30 +1,16 @@
-package com.unla.Beneficiarios.security.entities;
-
+package com.proyecto.infinitTask.app.security.service;
+import com.proyecto.infinitTask.app.entities.Usuario;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.unla.Beneficiarios.entities.User;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class UserSecurity implements UserDetails {
+@AllArgsConstructor
+public class UserDetailImpl implements UserDetails {
 
-    private String username;
-    private String password;
-
-    public UserSecurity(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public static UserSecurity build(User user) {
-        return new UserSecurity(user.getUsername(), user.getPassword());
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
+    private final Usuario usuario;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -33,12 +19,12 @@ public class UserSecurity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return usuario.getPassword();
     }
 
     @Override
-    public boolean isEnabled() {
-        return true;
+    public String getUsername() {
+        return usuario.getUsuario();
     }
 
     @Override
@@ -56,4 +42,12 @@ public class UserSecurity implements UserDetails {
         return true;
     }
 
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public String getEmail() {
+        return usuario.getEmail();
+    }
 }

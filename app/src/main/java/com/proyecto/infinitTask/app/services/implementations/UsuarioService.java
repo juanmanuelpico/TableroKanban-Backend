@@ -3,7 +3,6 @@ package com.proyecto.infinitTask.app.services.implementations;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTOLogin;
 import com.proyecto.infinitTask.app.dtos.request.Usuario.UsuarioDTORequest;
 import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOResponse;
-import com.proyecto.infinitTask.app.dtos.response.Usuario.UsuarioDTOWithToken;
 import com.proyecto.infinitTask.app.entities.Tarea;
 import com.proyecto.infinitTask.app.entities.Usuario;
 import com.proyecto.infinitTask.app.repositories.UsuarioRepository;
@@ -12,8 +11,10 @@ import com.proyecto.infinitTask.app.services.ITareaService;
 import com.proyecto.infinitTask.app.services.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,8 +25,10 @@ import java.util.stream.Collectors;
 @Service("usuarioService")
 public class UsuarioService implements IUsuarioService {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -59,7 +62,7 @@ public class UsuarioService implements IUsuarioService {
             usuario.setActivo(true);
 
             // Hash de la contraseña
-            usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+            usuario.setPassword(passwordEncoder().encode(dto.getPassword()));
             usuarioRepository.save(usuario);
             return true;
         }
@@ -130,7 +133,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-        public UsuarioDTOWithToken traerUsuarioLogin (UsuarioDTOLogin dtoLogin) throws Exception {
+        public UsuarioDTOResponse traerUsuarioLogin (UsuarioDTOLogin dtoLogin) throws Exception {
             Usuario usuarioEntidad = usuarioRepository.findByUsuario(dtoLogin.getUsuario());
             if (usuarioEntidad == null) {
                 throw new Exception("Usuario y/o contraseña incorrecto");
@@ -140,7 +143,7 @@ public class UsuarioService implements IUsuarioService {
             if (!passwordEncoder.matches(dtoLogin.getPassword(), usuarioEntidad.getPassword())) {
                 throw new Exception("Usuario y/o contraseña incorrecto");
             }
-            return modelMapper.map(usuarioEntidad, UsuarioDTOWithToken.class);
+            return modelMapper.map(usuarioEntidad, UsuarioDTOResponse.class);
         }
 
     @Override
@@ -152,7 +155,7 @@ public class UsuarioService implements IUsuarioService {
         usuario.setApellido(dto.getApellido());
         usuario.setNombre(dto.getNombre());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        usuario.setPassword(passwordEncoder().encode(dto.getPassword()));
         usuario.setFechaActualizacion(LocalDate.now());
         usuario.setUsuario(dto.getUsuario());
 
