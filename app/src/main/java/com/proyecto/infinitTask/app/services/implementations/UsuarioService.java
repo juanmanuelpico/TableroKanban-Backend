@@ -155,7 +155,9 @@ public class UsuarioService implements IUsuarioService {
         usuario.setApellido(dto.getApellido());
         usuario.setNombre(dto.getNombre());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(passwordEncoder().encode(dto.getPassword()));
+        if(!dto.getPassword().isBlank() && !dto.getPassword().isEmpty()) {
+            usuario.setPassword(passwordEncoder().encode(dto.getPassword()));
+        }
         usuario.setFechaActualizacion(LocalDate.now());
         usuario.setUsuario(dto.getUsuario());
 
