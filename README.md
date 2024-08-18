@@ -1,4 +1,4 @@
-# ProyectoKanban - Tablero Kanban para la gestión de proyectos (En cosntrucción)
+# ProyectoKanban - Tablero Kanban para la gestión de proyectos
 ## Descripcion del Proyecto API REST Backend
 Este proyecto es una API REST desarrollada en Java con el framework Spring Boot. Utiliza Maven para la gestión de dependencias, Hibernate como ORM, JDK 17 como versión del lenguaje y una base de datos remota MySQL.
 ## Características de funcionalidad
